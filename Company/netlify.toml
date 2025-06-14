@@ -1,7 +1,6 @@
 [build]
-  command = "npm install"
+  command = "npm run build"
   publish = "."
-  functions = "netlify/functions"
 
 [build.environment]
   NODE_VERSION = "18"
@@ -12,5 +11,6 @@
   status = 200
 
 [functions]
+  directory = "netlify/functions"
   node_bundler = "esbuild"
-  external_node_modules = ["mongodb"] 
+  external_node_modules = ["mongodb"]
