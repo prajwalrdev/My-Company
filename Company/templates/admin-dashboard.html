@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Form Submissions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .sidebar {
+            min-height: 100vh;
+            background: #343a40;
+            color: white;
+        }
+        .nav-link {
+            color: rgba(255,255,255,.8);
+        }
+        .nav-link:hover {
+            color: white;
+        }
+        .nav-link.active {
+            color: white;
+            background: rgba(255,255,255,.1);
+        }
+        .main-content {
+            padding: 20px;
+        }
+        .stats-card {
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        }
+        .table-responsive {
+            margin-top: 20px;
+        }
+        .status-badge {
+            width: 80px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar p-3">
+                <h4 class="mb-4">Admin Dashboard</h4>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#submissions">
+                            <i class="fa fa-inbox me-2"></i>Submissions
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#analytics">
+                            <i class="fa fa-chart-bar me-2"></i>Analytics
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#settings">
+                            <i class="fa fa-cog me-2"></i>Settings
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 main-content">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2>Form Submissions</h2>
+                    <div class="btn-group">
+                        <button class="btn btn-outline-primary" id="refreshData">
+                            <i class="fa fa-refresh me-2"></i>Refresh
+                        </button>
+                        <button class="btn btn-outline-success" id="exportData">
+                            <i class="fa fa-download me-2"></i>Export
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="card stats-card bg-primary text-white">
+                            <div class="card-body">
+                                <h6 class="card-title">Total Submissions</h6>
+                                <h2 id="totalSubmissions">0</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card stats-card bg-success text-white">
+                            <div class="card-body">
+                                <h6 class="card-title">New Today</h6>
+                                <h2 id="newSubmissions">0</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card stats-card bg-info text-white">
+                            <div class="card-body">
+                                <h6 class="card-title">With Attachments</h6>
+                                <h2 id="withAttachments">0</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card stats-card bg-warning text-white">
+                            <div class="card-body">
+                                <h6 class="card-title">Response Rate</h6>
+                                <h2 id="responseRate">0%</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" id="searchInput" placeholder="Search...">
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select" id="dateFilter">
+                            <option value="all">All Time</option>
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select" id="statusFilter">
+                            <option value="all">All Status</option>
+                            <option value="new">New</option>
+                            <option value="read">Read</option>
+                            <option value="replied">Replied</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-primary w-100" id="applyFilters">
+                            Apply Filters
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Submissions Table -->
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <input type="checkbox" id="selectAll" class="form-check-input">
+                                </th>
+                                <th>Date</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Message</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="submissionsTableBody">
+                            <!-- Submissions will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <select class="form-select" id="pageSize" style="width: auto;">
+                            <option value="10">10 per page</option>
+                            <option value="25">25 per page</option>
+                            <option value="50">50 per page</option>
+                            <option value="100">100 per page</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <nav aria-label="Page navigation" class="float-end">
+                            <ul class="pagination" id="pagination">
+                                <!-- Pagination will be generated here -->
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Submission Details Modal -->
+    <div class="modal fade" id="submissionDetailsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Submission Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="submissionDetailsBody">
+                    <!-- Details will be loaded here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="replyToSubmission">
+                        <i class="fa fa-reply me-2"></i>Reply
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Admin authentication
+        const ADMIN_TOKEN = 'your-secret-token'; // Replace with your actual token
+
+        // Initialize variables
+        let currentPage = 1;
+        let pageSize = 10;
+        let totalPages = 1;
+        let submissions = [];
+        let filteredSubmissions = [];
+
+        // Load submissions
+        async function loadSubmissions() {
+            try {
+                const response = await fetch('/.netlify/functions/get-submissions', {
+                    headers: {
+                        'Authorization': `Bearer ${ADMIN_TOKEN}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to load submissions');
+                }
+
+                submissions = await response.json();
+                filterSubmissions();
+                updateAnalytics();
+                renderSubmissions();
+            } catch (error) {
+                console.error('Error loading submissions:', error);
+                showAlert('Error loading submissions', 'danger');
+            }
+        }
+
+        // Filter submissions
+        function filterSubmissions() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const dateFilter = document.getElementById('dateFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+
+            filteredSubmissions = submissions.filter(submission => {
+                // Search term
+                const matchesSearch = 
+                    submission.name.toLowerCase().includes(searchTerm) ||
+                    submission.email.toLowerCase().includes(searchTerm) ||
+                    submission.message.toLowerCase().includes(searchTerm);
+
+                // Date filter
+                const submissionDate = new Date(submission.timestamp);
+                let matchesDate = true;
+                
+                if (dateFilter === 'today') {
+                    const today = new Date();
+                    matchesDate = submissionDate.toDateString() === today.toDateString();
+                } else if (dateFilter === 'week') {
+                    const weekAgo = new Date();
+                    weekAgo.setDate(weekAgo.getDate() - 7);
+                    matchesDate = submissionDate >= weekAgo;
+                } else if (dateFilter === 'month') {
+                    const monthAgo = new Date();
+                    monthAgo.setMonth(monthAgo.getMonth() - 1);
+                    matchesDate = submissionDate >= monthAgo;
+                }
+
+                // Status filter
+                const matchesStatus = statusFilter === 'all' || submission.status === statusFilter;
+
+                return matchesSearch && matchesDate && matchesStatus;
+            });
+
+            updateAnalytics();
+            renderSubmissions();
+        }
+
+        // Update analytics
+        function updateAnalytics() {
+            const total = filteredSubmissions.length;
+            const today = new Date().toDateString();
+            const newToday = filteredSubmissions.filter(sub => 
+                new Date(sub.timestamp).toDateString() === today
+            ).length;
+            const withAttachments = filteredSubmissions.filter(sub => 
+                sub.attachment
+            ).length;
+            const replied = filteredSubmissions.filter(sub => 
+                sub.status === 'replied'
+            ).length;
+            const responseRate = total ? Math.round((replied / total) * 100) : 0;
+
+            document.getElementById('totalSubmissions').textContent = total;
+            document.getElementById('newSubmissions').textContent = newToday;
+            document.getElementById('withAttachments').textContent = withAttachments;
+            document.getElementById('responseRate').textContent = `${responseRate}%`;
+        }
+
+        // Render submissions
+        function renderSubmissions() {
+            const start = (currentPage - 1) * pageSize;
+            const end = start + pageSize;
+            const pageSubmissions = filteredSubmissions.slice(start, end);
+            
+            const tableBody = document.getElementById('submissionsTableBody');
+            tableBody.innerHTML = '';
+
+            pageSubmissions.forEach(submission => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <input type="checkbox" class="form-check-input submission-checkbox" 
+                               data-id="${submission._id}">
+                    </td>
+                    <td>${new Date(submission.timestamp).toLocaleString()}</td>
+                    <td>${submission.name}</td>
+                    <td>${submission.email}</td>
+                    <td>${submission.message.substring(0, 50)}${submission.message.length > 50 ? '...' : ''}</td>
+                    <td>
+                        <span class="badge bg-${getStatusBadgeColor(submission.status)} status-badge">
+                            ${submission.status}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-info view-details" data-id="${submission._id}">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                            <button class="btn btn-sm btn-primary reply-to" data-id="${submission._id}">
+                                <i class="fa fa-reply"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger delete-submission" data-id="${submission._id}">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            // Add event listeners
+            document.querySelectorAll('.view-details').forEach(btn => {
+                btn.addEventListener('click', viewSubmissionDetails);
+            });
+
+            document.querySelectorAll('.reply-to').forEach(btn => {
+                btn.addEventListener('click', replyToSubmission);
+            });
+
+            document.querySelectorAll('.delete-submission').forEach(btn => {
+                btn.addEventListener('click', deleteSubmission);
+            });
+
+            updatePagination();
+        }
+
+        // View submission details
+        async function viewSubmissionDetails(e) {
+            const submissionId = e.target.closest('button').dataset.id;
+            const submission = filteredSubmissions.find(sub => sub._id === submissionId);
+            
+            const detailsModal = new bootstrap.Modal(document.getElementById('submissionDetailsModal'));
+            document.getElementById('submissionDetailsBody').innerHTML = `
+                <dl class="row">
+                    <dt class="col-sm-3">Date</dt>
+                    <dd class="col-sm-9">${new Date(submission.timestamp).toLocaleString()}</dd>
+                    
+                    <dt class="col-sm-3">Name</dt>
+                    <dd class="col-sm-9">${submission.name}</dd>
+                    
+                    <dt class="col-sm-3">Email</dt>
+                    <dd class="col-sm-9">${submission.email}</dd>
+                    
+                    <dt class="col-sm-3">Message</dt>
+                    <dd class="col-sm-9">${submission.message}</dd>
+                    
+                    <dt class="col-sm-3">Status</dt>
+                    <dd class="col-sm-9">
+                        <span class="badge bg-${getStatusBadgeColor(submission.status)}">
+                            ${submission.status}
+                        </span>
+                    </dd>
+                    
+                    ${submission.attachment ? `
+                        <dt class="col-sm-3">Attachment</dt>
+                        <dd class="col-sm-9">
+                            <a href="${submission.attachment}" target="_blank" class="btn btn-sm btn-primary">
+                                <i class="fa fa-download me-2"></i>Download
+                            </a>
+                        </dd>
+                    ` : ''}
+                    
+                    <dt class="col-sm-3">Visitor Info</dt>
+                    <dd class="col-sm-9">
+                        <pre class="bg-light p-2 rounded">${JSON.stringify(submission.visitor_info, null, 2)}</pre>
+                    </dd>
+                </dl>
+            `;
+            detailsModal.show();
+        }
+
+        // Get status badge color
+        function getStatusBadgeColor(status) {
+            switch (status) {
+                case 'new': return 'primary';
+                case 'read': return 'info';
+                case 'replied': return 'success';
+                default: return 'secondary';
+            }
+        }
+
+        // Show alert
+        function showAlert(message, type = 'success') {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            document.querySelector('.main-content').insertBefore(alertDiv, document.querySelector('.row'));
+            setTimeout(() => alertDiv.remove(), 5000);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSubmissions();
+
+            // Event listeners
+            document.getElementById('refreshData').addEventListener('click', loadSubmissions);
+            document.getElementById('applyFilters').addEventListener('click', filterSubmissions);
+            document.getElementById('searchInput').addEventListener('input', debounce(filterSubmissions, 300));
+            document.getElementById('dateFilter').addEventListener('change', filterSubmissions);
+            document.getElementById('statusFilter').addEventListener('change', filterSubmissions);
+            document.getElementById('pageSize').addEventListener('change', function(e) {
+                pageSize = parseInt(e.target.value);
+                currentPage = 1;
+                renderSubmissions();
+            });
+        });
+
+        // Helper function for debouncing
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+    </script>
+</body>
+</html> 
