@@ -4,6 +4,7 @@
   "description": "Contact form application with MongoDB integration",
   "main": "index.js",
   "scripts": {
+    "build": "echo \"No frontend build needed\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -12,4 +13,4 @@
   "engines": {
     "node": ">=18.0.0"
   }
-} 
+}
