@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jpg-Image Compressor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f6f6f6;
+      text-align: center;
+      padding: 20px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.dark-mode {
+      background: #121212;
+      color: #e0e0e0;
+    }
+
+    .header {
+      background: linear-gradient(to right, #e5c7e5, #e7cee7);
+      color: white;
+      padding: 20px;
+      font-size: 30px;
+      font-weight: bold;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .header button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      color: white;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+      transition: background 0.3s;
+    }
+
+    body.dark-mode .container {
+      background-color: #1e1e1e;
+      box-shadow: 0px 0px 10px rgba(255,255,255,0.05);
+    }
+
+    .upload-box {
+      border: 2px dashed #00bcd4;
+      border-radius: 8px;
+      padding: 30px;
+      margin-bottom: 20px;
+      cursor: pointer;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      background-color: #fefefe;
+    }
+
+    .upload-box:hover,
+    .upload-box.dragover {
+      border-color: #007bff;
+      background-color: #eaf4ff;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.6);
+      }
+      70% {
+        box-shadow: 0 0 0 15px rgba(0, 123, 255, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+      }
+    }
+
+    input[type="file"], input[type="number"], input[type="range"], select {
+      margin-top: 10px;
+      padding: 10px;
+      width: 90%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    body.dark-mode input, body.dark-mode select {
+      background: #333;
+      color: #fff;
+      border-color: #555;
+    }
+
+    .slider-container, .size-container, .resize-container {
+      margin: 10px 0;
+    }
+
+    .compress-btn {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 30px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .compress-btn:hover {
+      background-color: #0056b3;
+    }
+
+    #output {
+      max-width: 100%;
+      margin-top: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 5px rgba(0,0,0,0.1);
+    }
+
+    #download {
+      display: none;
+      text-decoration: none;
+      background-color: #28a745;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      margin-top: 15px;
+      display: inline-block;
+    }
+
+    #download:hover {
+      background-color: #218838;
+    }
+
+    #loading {
+      display: none;
+      font-style: italic;
+      color: #555;
+    }
+
+    #filesize {
+      color: #333;
+      margin-top: 10px;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: #007bff;
+      width: 0%;
+      transition: width 0.3s ease;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+
+    small {
+      color: #666;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body aria-label="JPEG Compressor Application">
+  <div class="header">
+    JPEG-Image Compressor
+    <button onclick="toggleDarkMode()">🌓</button>
+  </div>
+
+  <div class="container">
+    <div class="upload-box" id="upload-box" role="button" aria-label="Upload or Drop JPEG, PNG, or WebP">
+      <p><strong>Click or Drag & Drop JPG, PNG, WebP File Here</strong></p>
+      <input type="file" id="upload" accept="image/jpeg,image/png,image/webp">
+    </div>
+
+    <div class="size-container">
+      <label for="size">Target Size:</label><br>
+      <input type="number" id="size" min="1" step="1" value="100">
+      <select id="unit">
+        <option value="KB" selected>KB</option>
+        <option value="MB">MB</option>
+      </select>
+    </div>
+
+    <div class="resize-container">
+      <label for="resize">Resize Width (optional):</label><br>
+      <input type="number" id="resize" placeholder="e.g. 800" />
+      <br><small>Maintains aspect ratio</small>
+    </div>
+
+    <div class="slider-container">
+      <label for="quality">Initial Quality:</label><br>
+      <input type="range" id="quality" min="10" max="100" value="90">
+      <br><small>Higher = better image, larger file size</small>
+    </div>
+
+    <button class="compress-btn" onclick="compressImage()">Compress</button>
+    <div id="loading">Compressing image, please wait...</div>
+    <div class="progress-bar" id="progress-bar"></div>
+
+    <canvas id="canvas" style="display:none;"></canvas>
+    <img id="output" alt="Compressed Image Preview">
+    <div id="filesize"></div>
+    <br>
+    <a id="download" download="compressed.jpg">Download Compressed Image</a>
+  </div>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+    }
+
+    function compressImage() {
+      const fileInput = document.getElementById('upload');
+      const sizeInput = document.getElementById('size');
+      const unitInput = document.getElementById('unit');
+      const qualityInput = document.getElementById('quality');
+      const resizeInput = document.getElementById('resize');
+      const canvas = document.getElementById('canvas');
+      const outputImg = document.getElementById('output');
+      const downloadLink = document.getElementById('download');
+      const loadingText = document.getElementById('loading');
+      const fileSizeDisplay = document.getElementById('filesize');
+      const progressBar = document.getElementById('progress-bar');
+
+      if (fileInput.files.length === 0) {
+        alert('Please select an image');
+        return;
+      }
+
+      const file = fileInput.files[0];
+      let targetSize = parseInt(sizeInput.value);
+      if (unitInput.value === 'MB') targetSize *= 1024 * 1024;
+      else targetSize *= 1024;
+
+      // === Sanity check: target size should be less than original file size ===
+      if (targetSize > file.size) {
+        alert("Target size is larger than original image size. Try a smaller value to compress.");
+        return;
+      }
+
+      const reader = new FileReader();
+
+      loadingText.style.display = 'block';
+      progressBar.style.width = '0%';
+      outputImg.src = '';
+      downloadLink.style.display = 'none';
+      fileSizeDisplay.textContent = '';
+
+      reader.onload = function (event) {
+        const img = new Image();
+        img.onload = function () {
+          const ctx = canvas.getContext('2d');
+          let newWidth = parseInt(resizeInput.value) || img.width;
+          let scale = newWidth / img.width;
+          let newHeight = img.height * scale;
+
+          canvas.width = newWidth;
+          canvas.height = newHeight;
+          ctx.drawImage(img, 0, 0, newWidth, newHeight);
+
+          let quality = parseInt(qualityInput.value) / 100;
+          let compressedDataUrl, blob;
+
+          function stepCompression() {
+            compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+            blob = dataURLtoBlob(compressedDataUrl);
+            progressBar.style.width = Math.min(100 - (quality * 100), 100) + '%';
+
+            if (blob.size > targetSize && quality > 0.05) {
+              quality -= 0.05;
+              setTimeout(stepCompression, 50);
+            } else {
+              finalize(blob, compressedDataUrl);
+            }
+          }
+
+          stepCompression();
+        };
+        img.src = event.target.result;
+      };
+
+      reader.readAsDataURL(file);
+    }
+
+    function finalize(blob, dataUrl) {
+      const loadingText = document.getElementById('loading');
+      const outputImg = document.getElementById('output');
+      const downloadLink = document.getElementById('download');
+      const fileSizeDisplay = document.getElementById('filesize');
+      const progressBar = document.getElementById('progress-bar');
+
+      loadingText.style.display = 'none';
+      progressBar.style.width = '100%';
+
+      outputImg.src = dataUrl;
+      downloadLink.href = dataUrl;
+      downloadLink.style.display = 'inline-block';
+      fileSizeDisplay.textContent = `Compressed Size: ${(blob.size / 1024).toFixed(2)} KB`;
+    }
+
+    function dataURLtoBlob(dataURL) {
+      const byteString = atob(dataURL.split(',')[1]);
+      const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
+      const arrayBuffer = new ArrayBuffer(byteString.length);
+      const intArray = new Uint8Array(arrayBuffer);
+      for (let i = 0; i < byteString.length; i++) {
+        intArray[i] = byteString.charCodeAt(i);
+      }
+      return new Blob([arrayBuffer], { type: mimeString });
+    }
+
+    // Drag and drop
+    const uploadBox = document.getElementById('upload-box');
+    const fileInput = document.getElementById('upload');
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+      uploadBox.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        uploadBox.classList.add('dragover');
+      });
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      uploadBox.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        uploadBox.classList.remove('dragover');
+      });
+    });
+
+    uploadBox.addEventListener('drop', (e) => {
+      const dt = e.dataTransfer;
+      const files = dt.files;
+      fileInput.files = files;
+      compressImage();
+    });
+  </script>
+</body>
+</html>
