@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build"
+  command = "npm install"
   publish = "."
   functions = "netlify/functions"
 
@@ -7,10 +7,16 @@
   NODE_VERSION = "18"
 
 [[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"
+  from = "/admin/*"
+  to = "/admin-dashboard.html"
   status = 200
 
 [functions]
   node_bundler = "esbuild"
-  external_node_modules = ["mongodb"] 
+
+[functions.environment]
+  ADMIN_TOKEN = "your-secure-admin-token"
+  NETLIFY_SITE_ID = "your-site-id"
+  NETLIFY_API_TOKEN = "your-api-token"
+  SENDGRID_API_KEY = "your-sendgrid-api-key"
+  ADMIN_EMAIL = "your-admin-email@example.com" 
