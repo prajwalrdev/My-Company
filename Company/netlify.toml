@@ -1,6 +1,6 @@
 [build]
   command = "npm run build"
-  publish = "."
+  publish = "."  # Set to "." since you don’t have a frontend
 
 [build.environment]
   NODE_VERSION = "18"
