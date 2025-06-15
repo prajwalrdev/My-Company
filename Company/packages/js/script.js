@@ -1,4 +1,5 @@
-const fields = ["name", "last_name", "email", "message"];
+document.addEventListener('DOMContentLoaded', function() {
+  const fields = ["name", "last_name", "email", "message"];
   const toast = new bootstrap.Toast(document.getElementById("toast"));
 
   function showToast(message, bg = "bg-success") {
@@ -69,5 +70,6 @@ const fields = ["name", "last_name", "email", "message"];
   });
 
   // Event bindings
-  document.addEventListener("DOMContentLoaded", loadFormData);
+  loadFormData();
   document.getElementById("clearBtn").addEventListener("click", clearFormData);
+});
