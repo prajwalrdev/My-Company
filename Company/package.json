@@ -1,15 +1,14 @@
 {
-  "name": "contact-form-app",
+  "name": "blockbtech",
   "version": "1.0.0",
-  "description": "Contact form application with MongoDB integration",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "description": "BlockB Tech Website",
   "dependencies": {
-    "mongodb": "^5.7.0"
+    "@netlify/functions": "^2.0.0",
+    "@octokit/rest": "^19.0.7",
+    "@sendgrid/mail": "^7.7.0",
+    "node-fetch": "^2.6.7"
   },
-  "engines": {
-    "node": ">=18.0.0"
+  "devDependencies": {
+    "netlify-cli": "^12.0.0"
   }
 } 
