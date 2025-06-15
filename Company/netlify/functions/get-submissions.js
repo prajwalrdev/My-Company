@@ -1,5 +1,4 @@
-const { Octokit } = require('@octokit/rest');
-const fetch = require('node-fetch');
+const { MongoClient } = require('mongodb');
 
 exports.handler = async function(event, context) {
   // Check for admin token
@@ -19,42 +18,22 @@ exports.handler = async function(event, context) {
     };
   }
 
+  const uri = process.env.MONGODB_URI;
+  const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
   try {
-    // Initialize Octokit
-    const octokit = new Octokit({
-      auth: process.env.GITHUB_TOKEN
-    });
-
-    // Get form submissions from Netlify
-    const response = await fetch('https://api.netlify.com/api/v1/sites/' + process.env.NETLIFY_SITE_ID + '/submissions', {
-      headers: {
-        'Authorization': 'Bearer ' + process.env.NETLIFY_API_TOKEN
-      }
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch submissions');
-    }
-
-    const submissions = await response.json();
-
-    // Transform submissions to match the expected format
-    const transformedSubmissions = submissions.map(submission => ({
-      _id: submission.id,
-      timestamp: submission.created_at,
-      name: submission.data.name,
-      email: submission.data.email,
-      message: submission.data.message,
-      status: submission.data.status || 'new',
-      attachment: submission.data.attachment,
-      visitor_info: submission.data.visitor_info || {}
-    }));
+    await client.connect();
+    const db = client.db('blockbtech');
+    const collection = db.collection('submissions');
+    const submissions = await collection.find({}).sort({ createdAt: -1 }).toArray();
+    await client.close();
 
     return {
       statusCode: 200,
-      body: JSON.stringify(transformedSubmissions)
+      body: JSON.stringify(submissions)
     };
   } catch (error) {
+    if (client) await client.close();
     console.error('Error:', error);
     return {
       statusCode: 500,
