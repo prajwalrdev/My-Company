@@ -19,4 +19,4 @@
   NETLIFY_SITE_ID = "your-site-id"
   NETLIFY_API_TOKEN = "your-api-token"
   SENDGRID_API_KEY = "your-sendgrid-api-key"
-  ADMIN_EMAIL = "your-admin-email@example.com" 
+  ADMIN_EMAIL = "your-admin-email@example.com"
