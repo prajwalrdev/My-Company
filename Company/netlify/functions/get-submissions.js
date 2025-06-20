@@ -1,4 +1,4 @@
-const { MongoClient } = require('mongodb');
+const { db } = require('./utils/firebase-config');
 
 exports.handler = async function(event, context) {
   // Check for admin token
@@ -18,22 +18,24 @@ exports.handler = async function(event, context) {
     };
   }
 
-  const uri = process.env.MONGODB_URI;
-  const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-
   try {
-    await client.connect();
-    const db = client.db('blockbtech');
-    const collection = db.collection('submissions');
-    const submissions = await collection.find({}).sort({ createdAt: -1 }).toArray();
-    await client.close();
+    const submissionsSnapshot = await db.collection('submissions')
+      .orderBy('timestamp', 'desc')
+      .get();
+
+    const submissions = [];
+    submissionsSnapshot.forEach(doc => {
+      submissions.push({
+        id: doc.id,
+        ...doc.data()
+      });
+    });
 
     return {
       statusCode: 200,
       body: JSON.stringify(submissions)
     };
   } catch (error) {
-    if (client) await client.close();
     console.error('Error:', error);
     return {
       statusCode: 500,

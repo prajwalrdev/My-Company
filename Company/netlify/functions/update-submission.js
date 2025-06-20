@@ -1,4 +1,5 @@
-const fetch = require('node-fetch');
+const { db } = require('./utils/firebase-config');
+const sgMail = require('@sendgrid/mail');
 
 exports.handler = async function(event, context) {
   // Check for admin token
@@ -26,42 +27,46 @@ exports.handler = async function(event, context) {
   }
 
   try {
-    const { submissionId } = event.path.split('/').pop();
+    const submissionId = event.path.split('/').pop();
     const updates = JSON.parse(event.body);
 
-    // Update submission in Netlify
-    const response = await fetch(`https://api.netlify.com/api/v1/sites/${process.env.NETLIFY_SITE_ID}/submissions/${submissionId}`, {
-      method: 'PUT',
-      headers: {
-        'Authorization': 'Bearer ' + process.env.NETLIFY_API_TOKEN,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(updates)
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to update submission');
+    // Get the current submission
+    const submissionRef = db.collection('submissions').doc(submissionId);
+    const submissionDoc = await submissionRef.get();
+    
+    if (!submissionDoc.exists) {
+      return {
+        statusCode: 404,
+        body: JSON.stringify({ error: 'Submission not found' })
+      };
     }
 
-    const updatedSubmission = await response.json();
+    const currentData = submissionDoc.data();
+
+    // Update submission in Firestore
+    await submissionRef.update(updates);
 
     // If there's a reply, send email
     if (updates.reply) {
-      // Send email using your preferred email service
-      // Example using SendGrid:
-      const sgMail = require('@sendgrid/mail');
       sgMail.setApiKey(process.env.SENDGRID_API_KEY);
       
       const msg = {
-        to: updatedSubmission.data.email,
+        to: currentData.email,
         from: process.env.ADMIN_EMAIL,
-        subject: 'Re: ' + (updatedSubmission.data.subject || 'Your message to BlockB Tech'),
+        subject: 'Re: ' + (currentData.subject || 'Your message to BlockB Tech'),
         text: updates.reply,
         html: updates.reply
       };
 
       await sgMail.send(msg);
     }
+
+    // Get the updated submission
+    const updatedDoc = await submissionRef.get();
+    const updatedSubmission = {
+      id: updatedDoc.id,
+      ...updatedDoc.data()
+    };
 
     return {
       statusCode: 200,

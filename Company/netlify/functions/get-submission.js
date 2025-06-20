@@ -1,33 +1,49 @@
-const { getSubmission } = require('@netlify/functions');
+const { db } = require('./utils/firebase-config');
 
 exports.handler = async function(event, context) {
-  // Check for admin authentication
-  if (!isAdmin(event)) {
+  // Check for admin token
+  const authHeader = event.headers.authorization;
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return {
       statusCode: 401,
       body: JSON.stringify({ error: 'Unauthorized' })
     };
   }
 
+  const token = authHeader.split(' ')[1];
+  if (token !== process.env.ADMIN_TOKEN) {
+    return {
+      statusCode: 401,
+      body: JSON.stringify({ error: 'Invalid token' })
+    };
+  }
+
   const submissionId = event.path.split('/').pop();
 
   try {
-    const submission = await getSubmission('contact', submissionId);
+    const submissionDoc = await db.collection('submissions').doc(submissionId).get();
+    
+    if (!submissionDoc.exists) {
+      return {
+        statusCode: 404,
+        body: JSON.stringify({ error: 'Submission not found' })
+      };
+    }
+
+    const submission = {
+      id: submissionDoc.id,
+      ...submissionDoc.data()
+    };
+
     return {
       statusCode: 200,
       body: JSON.stringify(submission)
     };
   } catch (error) {
+    console.error('Error:', error);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: 'Error fetching submission' })
     };
   }
-};
-
-function isAdmin(event) {
-  // Implement your admin authentication logic here
-  // This is a simple example - you should use a more secure method
-  const authHeader = event.headers.authorization;
-  return authHeader === 'Bearer your-secret-token';
-} 
+}; 

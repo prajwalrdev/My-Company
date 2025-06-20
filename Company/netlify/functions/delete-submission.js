@@ -1,5 +1,4 @@
-const fetch = require('node-fetch');
-const { deleteSubmission } = require('@netlify/functions');
+const { db } = require('./utils/firebase-config');
 
 exports.handler = async function(event, context) {
   // Check for admin token
@@ -27,19 +26,10 @@ exports.handler = async function(event, context) {
   }
 
   try {
-    const { submissionId } = event.path.split('/').pop();
-
-    // Delete submission from Netlify
-    const response = await fetch(`https://api.netlify.com/api/v1/sites/${process.env.NETLIFY_SITE_ID}/submissions/${submissionId}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': 'Bearer ' + process.env.NETLIFY_API_TOKEN
-      }
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to delete submission');
-    }
+    const submissionId = event.path.split('/').pop();
+    
+    // Delete submission from Firestore
+    await db.collection('submissions').doc(submissionId).delete();
 
     return {
       statusCode: 200,
