@@ -1,17 +1,65 @@
-  // Run after full page load
-  window.onload = function() {
-    const preloader = document.querySelector('.preloader');
-    const mainContent = document.getElementById('main-content');
+document.addEventListener('DOMContentLoaded', function() {
+    // Theme Switcher
+    const themeSwitcher = document.getElementById('themeSwitcher');
+    const body = document.body;
 
-    if (preloader && mainContent) {
-      // Fade out preloader
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        body.classList.add(savedTheme);
+    }
+
+    themeSwitcher.addEventListener('click', () => {
+        if (body.classList.contains('dark-mode')) {
+            body.classList.remove('dark-mode');
+            localStorage.setItem('theme', 'light-mode');
+        } else {
+            body.classList.add('dark-mode');
+            localStorage.setItem('theme', 'dark-mode');
+        }
+    });
+
+    // Visit Counter (Background - No Display)
+    async function trackVisit() {
+        try {
+            // Check if this is a real page visit (not a bot or refresh)
+            if (navigator.userAgent.includes('bot') || navigator.userAgent.includes('crawler')) {
+                return; // Don't count bot visits
+            }
+            
+            const visitCounter = new VisitCounter();
+            await visitCounter.incrementVisit();
+            
+            // Log success for debugging (only in console)
+            console.log('Visit tracked successfully');
+        } catch (error) {
+            console.error('Error tracking visit:', error);
+        }
+    }
+
+    // Initialize visit tracking (silent)
+    trackVisit();
+
+    // Run after full page load
+    window.addEventListener('load', function() {
+      const preloader = document.querySelector('.preloader');
+      const mainContent = document.getElementById('main-content');
+      const footer = document.querySelector('.site-footer');
+
+      if (preloader) {
+        // Fade out preloader
         preloader.style.transition = 'opacity 0.5s ease';
-      preloader.style.opacity = '0';
+        preloader.style.opacity = '0';
+        preloader.style.visibility = 'hidden';
+      }
 
-      // Show main content after fade out
-      setTimeout(() => {
-        preloader.style.display = 'none';
-        mainContent.style.display = 'block';
+      if (mainContent) {
+        // Show main content after fade out
+        setTimeout(() => {
+          preloader.style.display = 'none';
+          mainContent.style.display = 'block';
+          if (footer) {
+            footer.style.visibility = 'visible';
+          }
         }, 500);
       }
 
@@ -172,9 +220,9 @@
               top: offsetPosition,
               behavior: 'smooth'
             });
-      }
-    });
-  });
+          }
+        });
+      });
 
       // Close mobile menu when clicking outside
       document.addEventListener('click', function(e) {
@@ -187,7 +235,26 @@
           new bootstrap.Collapse(navbar).hide();
         }
       });
-    };
+    });
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const headerOffset = 80;
+          const elementPosition = target.getBoundingClientRect().top;
+          const offsetPosition = elementPosition - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
 
     // Add this to your existing script
     document.addEventListener('DOMContentLoaded', function() {
@@ -353,50 +420,37 @@
       }
 
       // Handle visitor registration
-      document.getElementById('completeRegistration').addEventListener('click', function() {
-        const form = document.getElementById('visitorRegistrationForm');
-        const name = document.getElementById('visitorName').value;
-        const email = document.getElementById('visitorEmail').value;
-        const newsletterOptIn = document.getElementById('newsletterOptIn').checked;
+      const visitorForm = document.getElementById('visitorRegistrationForm');
+      const completeRegistrationBtn = document.getElementById('completeRegistration');
+      const visitorNameInput = document.getElementById('visitorName');
+      const visitorEmailInput = document.getElementById('visitorEmail');
 
-        // Validate form
-        if (!form.checkValidity()) {
-          form.classList.add('was-validated');
-          return;
-        }
+      if (visitorForm && completeRegistrationBtn) {
+        completeRegistrationBtn.addEventListener('click', function() {
+          if (visitorForm.checkValidity()) {
+            const welcomeModal = bootstrap.Modal.getInstance(document.getElementById('welcomeModal'));
+            if (welcomeModal) {
+              welcomeModal.hide();
+            }
+            if (visitorNameInput) {
+              localStorage.setItem('visitorName', visitorNameInput.value);
+            }
+            if (visitorEmailInput) {
+              localStorage.setItem('visitorEmail', visitorEmailInput.value);
+            }
+          } else {
+            visitorForm.classList.add('was-validated');
+          }
+        });
+      }
 
-        // Save visitor information
-        const visitorData = {
-          name: name,
-          email: email,
-          newsletterOptIn: newsletterOptIn,
-          firstVisit: new Date().toISOString()
-        };
+      if (visitorNameInput) {
+        visitorNameInput.value = localStorage.getItem('visitorName') || '';
+      }
 
-        // Store in localStorage
-        localStorage.setItem('hasVisited', 'true');
-        localStorage.setItem('visitorInfo', JSON.stringify(visitorData));
-
-        // Add visitor info to form
-        const visitorInfoField = document.createElement('input');
-        visitorInfoField.type = 'hidden';
-        visitorInfoField.name = 'visitor_info';
-        visitorInfoField.value = JSON.stringify(visitorData);
-        document.getElementById('contactForm').appendChild(visitorInfoField);
-
-        // Close modal
-        bootstrap.Modal.getInstance(document.getElementById('welcomeModal')).hide();
-
-        // Show welcome message
-        showToast(`Welcome, ${name}!`, 'success');
-
-        // If newsletter opt-in, show additional message
-        if (newsletterOptIn) {
-          setTimeout(() => {
-            showToast('Thank you for subscribing to our newsletter!', 'info');
-          }, 2000);
-        }
-      });
+      if (visitorEmailInput) {
+        visitorEmailInput.value = localStorage.getItem('visitorEmail') || '';
+      }
 
       // Add visitor info to form if returning visitor
       if (hasVisited && Object.keys(visitorInfo).length > 0) {
@@ -504,3 +558,83 @@
         }
       }
     });
+
+    // Scroll Animations
+    const animatedItems = document.querySelectorAll('.animated-item');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    animatedItems.forEach(item => {
+        observer.observe(item);
+    });
+
+    // --- Unique User and Page View Tracking ---
+    (function() {
+        // Firebase must be initialized and Firestore available as 'db'
+        if (typeof firebase === 'undefined' || typeof firebase.firestore !== 'function') return;
+        if (typeof db === 'undefined') {
+            if (typeof initializeFirebase === 'function') {
+                initializeFirebase();
+            }
+        }
+        // Helper: Generate UUID
+        function generateUUID() {
+            return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+                (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+            );
+        }
+        // Get or create UUID for this user
+        let uuid = localStorage.getItem('site_uuid');
+        if (!uuid) {
+            uuid = generateUUID();
+            localStorage.setItem('site_uuid', uuid);
+        }
+        // Get page name (use pathname, e.g. 'index.html' or 'portfolio.html')
+        const pageName = window.location.pathname.split('/').pop() || 'homepage';
+        // Firestore refs
+        const usersRef = db.collection('users').doc(uuid);
+        const analyticsRef = db.collection('analytics').doc('website_visits');
+        const pageViewsRef = db.collection('analytics').doc('page_views');
+        // Track user and page view
+        (async function() {
+            try {
+                // 1. Update user doc
+                const userDoc = await usersRef.get();
+                const now = new Date();
+                if (!userDoc.exists) {
+                    // New user: create doc and increment uniqueVisitors
+                    await usersRef.set({
+                        firstVisit: now,
+                        lastVisit: now,
+                        pageViews: { [pageName]: 1 }
+                    });
+                    // Increment uniqueVisitors in analytics
+                    await analyticsRef.set({ uniqueVisitors: firebase.firestore.FieldValue.increment(1) }, { merge: true });
+                } else {
+                    // Existing user: update lastVisit and increment page view
+                    const data = userDoc.data();
+                    const pageViews = data.pageViews || {};
+                    pageViews[pageName] = (pageViews[pageName] || 0) + 1;
+                    await usersRef.update({
+                        lastVisit: now,
+                        pageViews: pageViews
+                    });
+                }
+                // 2. Increment page view count in analytics/page_views
+                await pageViewsRef.set({
+                    [pageName]: firebase.firestore.FieldValue.increment(1)
+                }, { merge: true });
+            } catch (err) {
+                console.error('Analytics tracking error:', err);
+            }
+        })();
+    })();
+});

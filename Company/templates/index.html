@@ -1,7 +1,7 @@
 <!DOCTYPE html>
     <html lang="en">
     <head>
-    <title>blockbTech.in: A New Era of Tech-Driven Innovation</title>
+    <title>Prajwal Dev | blockbTech.in - Tech Innovation & Web Development</title>
     <link rel="canonical" href="https://blockbtech.in/" />
     <!-- Google Analytics 4 (replace G-XXXXXXXXXX with your GA4 ID) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-G3DD9D07RW"></script>
@@ -59,17 +59,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta charset="utf-8">
 	<meta http-equiv="Content-Language" content="en">
-	<meta name="description" content="BlockBTech is a technology-focused platform, company, and community for digital innovation, web development, and knowledge sharing.">
+	<meta name="description" content="Explore Prajwal Dev's blockbtech.in, a hub for web development projects, tech innovation, and useful tools like an online image compressor and calculator.">
 	<meta name="keywords" content="blockbtech, technology, web development, portfolio, Prajwal Dev, digital innovation, projects, coding, programming">
 	<meta name="author" content="Prajwal Dev">
 	<!-- Open Graph / Facebook -->
-	<meta property="og:title" content="blockbTech.in: A New Era of Tech-Driven Innovation">
+	<meta property="og:title" content="Prajwal Dev | blockbTech.in - Tech Innovation & Web Development">
 	<meta property="og:description" content="Showcasing projects, sharing knowledge, and growing as a developer.">
 	<meta property="og:image" content="/packages/images/block4.png">
 	<meta property="og:type" content="website">
 	<!-- Twitter -->
 	<meta name="twitter:card" content="summary_large_image">
-	<meta name="twitter:title" content="blockbTech.in: A New Era of Tech-Driven Innovation">
+	<meta name="twitter:title" content="Prajwal Dev | blockbTech.in - Tech Innovation & Web Development">
 	<meta name="twitter:description" content="Showcasing projects, sharing knowledge, and growing as a developer.">
 	<meta name="twitter:image" content="/packages/images/block4.png">
 	<!--- Bootstrap 5 CSS link --->
@@ -83,6 +83,9 @@
     <!--- Owl Carousel Js And CSS For Testimonial Slider--->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css">
+    <!--- Firebase SDK --->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
     <!--- style.css, where we will write our custom css--->
     <link rel="stylesheet" href="packages/css/common.css">
     <link rel="stylesheet" href="packages/css/praj.css">
@@ -100,7 +103,7 @@
    <nav class="navbar navbar-expand-lg fixed-top" id="navbar_top" role="navigation" aria-label="Primary navigation">
   <div class="container">
     <a class="navbar-brand" href="#home">
-      <img src="packages/images/block4.png" alt="blockbtech logo" height="40" class="d-inline-block align-text-top me-2">
+      <img src="packages/images/block4.png" alt="blockbtech logo" height="40" class="d-inline-block me-2">
       block<span class="span-col">btech</span>
     </a>
     <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse-toggle" 
@@ -129,21 +132,23 @@
           <a class="nav-link" href="#contactus">Contact</a>
         </li>
       </ul>
+      <button class="theme-switcher" id="themeSwitcher" aria-label="Toggle theme">
+        <i class="fas fa-sun"></i>
+        <i class="fas fa-moon"></i>
+      </button>
     </div>
   </div>
 </nav>
 
-    <div class="container-fluid main-section overflow-hidden">
-        <div class="container" id="home">
+    <section class="container-fluid main-section overflow-hidden" id="home">
+        <div class="container">
           <div class="row align-items-center">
-            <div class="col-md-6 col-12 d-flex flex-column justify-content-center" style="min-height: 400px;">
-              <div class="col-lg-7 col-md-7 col-12" style="min-height: 400px;">
+            <div class="col-md-6 col-12 d-flex flex-column justify-content-center hero-left-col">
               <div class="banner-left">
-                <h1>Hi There,<span class="span-col">I'm</span></h1>
-                <h2>Prajwal Dev</h2>
+                <h2>Hi There, <span class="span-col">I'm</span></h2>
+                <h1>Prajwal Dev</h1>
                 <span class="head-bottom"></span>
                 <h3 class="typing">Web <span class="span-col">Developer</span></h3>
-                <p> </p>
                 <div class="banner-section">
                   <a href="https://www.linkedin.com/in/prajwal-r-020898257?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">
                     <i class="fab fa-linkedin-in"></i>
@@ -160,7 +165,6 @@
                 </div>
               </div>
             </div>
-            </div>
             <div class="col-md-6 col-12">
               <div class="banner-top">
                 <img class="banner-scratch-bg" src="packages/images/black-circle-png-images-hd-1714.png" alt="Abstract black circle background for BlockBTech banner" loading="lazy">
@@ -171,25 +175,24 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="container-fluid bg-grey">
+      </section>
+      <section class="container-fluid bg-grey" id="about">
         <div class="container">
-          <div class="heading" id="about">
+          <div class="heading animated-item">
             <h5>ABOUT</h5>
             <h2><span class="heading-border"></span> ABOUT ME<span class="heading-border"></span></h2>
           </div>
           <div class="row">
-            <div class="col-lg-5 col-md-5 col-12">
+            <div class="col-lg-5 col-md-5 col-12 animated-item">
               <div class="about-img"> <img src="packages/images/Prajwal.jpg" alt="Prajwal Dev profile photo" loading="lazy"> </div>
             </div>
-            <div class="col-lg-7 col-md-7 col-12">
+            <div class="col-lg-7 col-md-7 col-12 animated-item">
               <div class="about-info">
                 <h2>About Me</h2>
                 <h4>I'm Prajwal Dev, passionate about building digital solutions through clean design and effective code. "blockbtech" is my initiative to showcase projects, share knowledge, and grow as a developer.</h4>
-                <p>If "blockbtech" refers to a specific technology or term, providing more context or details could help me provide a more accurate and relevant response. 
-                  Feel free to provide additional information or ask about a broader topic related to blockchain technology, if that's what you're referring to.</p>
+                <p>My goal is to leverage technology to build innovative and user-friendly web experiences. I am always exploring new technologies and seeking to improve my craft.</p>
   
-                <h2>Technologies and Skills</h2>
+                <h2 class="section-title">Technologies and Skills</h2>
                 <div class="about-tool"> 
                 <span>HTML</span> 
                 <span>CSS</span> 
@@ -197,7 +200,7 @@
                 <span>C Language</span>  
                 <span>JavaScript</span>
                 </div>
-                <h2>Work Process</h2>
+                <h2 class="section-title">Work Process</h2>
                 <div class="row about-work">
                   <div class="col-md-3 col-12 mt-2"> <span>#01</span>
                     <h4>Research</h4>
@@ -206,7 +209,7 @@
                     <h4>Design</h4>
                   </div>
                   <div class="col-md-3 col-12 mt-2"> <span>#03</span>
-                    <h4>Codeing</h4>
+                    <h4>Coding</h4>
                   </div>
                   <div class="col-md-3 col-12 mt-2"> <span>#04</span>
                     <h4>Launch</h4>
@@ -216,42 +219,42 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="container-fluid main-section">
+      </section>
+      <section class="container-fluid main-section" id="services">
         <div class="container">
 	
-          <div class="heading" id="services">
+          <div class="heading animated-item">
             <h5>SERVICES</h5>
             <h2><span class="heading-border"></span> MY SERVICES<span class="heading-border"></span></h2>
           </div>
           <div class="row">
-            <div class="col-lg-4 col-md-6 col-12">
+            <div class="col-lg-4 col-md-6 col-12 animated-item">
               <div  class="service">
                 <div class="service-hex"><i class="fas fa-database"></i></div>
                 <div class="service-inner">
                   <h3>BlockBtech World</h3>
-                  <p>There's no one way to be creative – any old way will work.I have create this website to share my knowledge and experience with the world </p>
-		    <a href="./protfolio/Responsive-Portfolio-Design/index1.html" class="button button--flex button--small portfolio__button">
+                  <p>I created this website to share my knowledge and experience with the world. There is no single way to be creative.</p>
+		    <a href="../protfolio/index1.html" class="button button--flex button--small portfolio__button">
                         More Info
                         <i class="uil uil-arrow-right button__icon"></i>
                     </a>
                 </div>
               </div>
             </div>
-		  <div class="col-lg-4 col-md-6 col-12">
+		  <div class="col-lg-4 col-md-6 col-12 animated-item">
               <div  class="service">
                 <div class="service-hex"><i class="fas fa-database"></i></div>
                 <div class="service-inner">
-                  <h3>Image-Compressor</h3>
-                  <p>Compress JPG Images Online – Fast, Free & High Qualit</p>
-		    <a href="./jpgcompressor/index.html" class="button button--flex button--small portfolio__button">
+                  <h3>Image Compressor</h3>
+                  <p>Compress JPG images online with this fast, free, and high-quality tool.</p>
+		    <a href="../jpgcompressor/index.html" class="button button--flex button--small portfolio__button">
                         More Info
                         <i class="uil uil-arrow-right button__icon"></i>
                     </a>
                 </div>
               </div>
             </div>
-            <div class="col-lg-4 col-md-6 col-12">
+            <div class="col-lg-4 col-md-6 col-12 animated-item">
               <div  class="service">
                 <div class="service-hex"><i class="fas fa-bug"></i></div>
                 <div class="service-inner">
@@ -264,13 +267,12 @@
                 </div>
               </div>
             </div>
-	    <div class="col-lg-4 col-md-6 col-12">
+	    <div class="col-lg-4 col-md-6 col-12 animated-item">
               <div  class="service">
                 <div class="service-hex"><i class="fas fa-cube"></i></div>
                 <div class="service-inner">
 		<h3>Calculator</h3>
-                  <p>A simple calculator project built using HTML, CSS, and JavaScript.That do all Arithematic operations.<br>
-                    It's important to understand its features and functions to ensure accurate results for specific calculations.</p>
+                  <p>A simple calculator built with HTML, CSS, and JavaScript that performs all standard arithmetic operations.</p>
 		    <a href="./cal.html" class="button button--flex button--small portfolio__button">
                         More Info
                         <i class="uil uil-arrow-right button__icon"></i>
@@ -278,80 +280,85 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-4 col-md-6 col-12">
+            <div class="col-lg-4 col-md-6 col-12 animated-item">
               <div  class="service">
                 <div class="service-hex"><i class="fas fa-file-code"></i></div>
                 <div class="service-inner">
                   <h3>Make it Simple</h3>
-                  <p>"Blockbtech refers to the get information latest update's of present"</p>
+                  <p>Simplifying complex technology with clear and concise information and regular updates.</p>
                 </div>
               </div>
             </div>
           </div>
       </div>
-      </div>
-      <div class="container-fluid main-section bg-grey">
+      </section>
+      <section class="container-fluid main-section bg-grey" id="work">
         <div class="container">
-          <div class="heading" id="work">
+          <div class="heading animated-item">
             <h5>EXPERIENCE</h5>
             <h2><span class="heading-border"></span> MY EXPERIENCE<span class="heading-border"></span></h2>
           </div>
           <div class="row">
-            <div class="col-lg-4 col-md-4 col-12">
-              <div class="experience">
-                <div class=" col-12">
-                  <h5>Dec, 2023 – Present-Day</h5>
-                </div>
-                <div class=" col-12 ex-left">
-                  <h4>Calculator</h4>
-                  <p>A simple calculator project built using HTML, CSS, and JavaScript.That do all Arithematic operations.
-                    It's important to understand its features and functions to ensure accurate results for specific calculations.
-                  </p>
+            <div class="col-lg-4 col-md-4 col-12 mb-4 animated-item">
+              <div class="experience-book">
+                <div class="experience-page">
+                  <div class="experience-front">
+                    <h5>Dec, 2023 – Present</h5>
+                    <h4>Calculator</h4>
+                    <p>Developed a functional calculator using HTML, CSS, and JavaScript, capable of handling all basic arithmetic operations.</p>
                   </div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-12">
-              <div class="experience">
-                <div class=" col-12">
-                  <h5>Dec, 2023 – Present-Day</h5>
-                </div>
-                <div class=" col-12 ex-left">
-                  <h4>Web Developer</h4>
-                  <p>A web developer is a professional who specializes in the development of websites and web applications.
-                     Web development encompasses a range of tasks and skills, and developers may focus on different aspects of the process.</p>
+                  <div class="experience-back">
+                     <i class="fas fa-book-open"></i>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="col-lg-4 col-md-4 col-12">
-              <div class="experience">
-                <div class="col-12">
-                  <h5>Dec, 2023 – Present-Day</h5>
+            <div class="col-lg-4 col-md-4 col-12 mb-4 animated-item">
+              <div class="experience-book">
+                <div class="experience-page">
+                  <div class="experience-front">
+                    <h5>Dec, 2023 – Present</h5>
+                    <h4>Web Developer</h4>
+                    <p>As a professional web developer, I specialize in building and maintaining websites and web applications, focusing on both front-end and back-end development.</p>
+                  </div>
+                  <div class="experience-back">
+                    <i class="fas fa-book-open"></i>
+                  </div>
                 </div>
-                <div class="col-12 ex-left">
-                  <h4>Validation Form</h4>
-                  <p>Form validation is a crucial aspect of web development, ensuring that user-submitted data is accurate, complete, and secure.
-                     Validation can be performed both on the client side (using JavaScript) and on the server side.</p>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-12 mb-4 animated-item">
+              <div class="experience-book">
+                <div class="experience-page">
+                  <div class="experience-front">
+                    <h5>Dec, 2023 – Present</h5>
+                    <h4>Validation Form</h4>
+                    <p>Implemented robust form validation using client-side JavaScript and server-side checks to ensure data accuracy, completeness, and security.</p>
+                  </div>
+                  <div class="experience-back">
+                    <i class="fas fa-book-open"></i>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="container-fluid main-section">
+      </section>
+      <section class="container-fluid main-section" id="port">
         <div class="container">
-          <div class="heading" id="port">
+          <div class="heading animated-item">
             <h5>PORTFOLIO</h5>
             <h2><span class="heading-border"></span> Blockbtech World<span class="heading-border"></span></h2>
           </div>
           <div class="row mt-5">
-            <div class="col-lg-6 col-md-12 col-12">
+            <div class="col-lg-6 col-md-12 col-12 animated-item">
               <div class="portfolio-section">
                 <div class="row">
                   <div class="col-md-7 col-12"> <img src="packages/images/cer.jpg" alt="Certificate: Time management - Infosys Springboard" loading="lazy"> </div>
                   <div class="col-md-5 col-12">
                     <div class="portfolio-info">
                       <h3>Time management</h3>
-                      <p>I have complete</p>
+                      <p>I have completed this course.</p>
                       <span>#infosys</span> 
                       <span>#springboard</span> 
                      </div>
@@ -359,14 +366,14 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-6 col-md-12 col-12">
+            <div class="col-lg-6 col-md-12 col-12 animated-item">
               <div class="portfolio-section">
                 <div class="row">
                   <div class="col-md-7 col-12"> <img src="packages/images/cerl.jpg" alt="Certificate: Negotiation skill - Infosys Springboard" loading="lazy"> </div>
                   <div class="col-md-5 col-12">
                     <div class="portfolio-info">
                       <h3>Negotiation skill</h3>
-                      <p>I have complete</p>
+                      <p>I have completed this course.</p>
                       <span>#infosys</span> 
                       <span>#springboard</span> 
                      </div>
@@ -374,14 +381,14 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-6 col-md-12 col-12 mt-4">
+            <div class="col-lg-6 col-md-12 col-12 mt-4 animated-item">
               <div class="portfolio-section">
                 <div class="row">
                   <div class="col-md-7 col-12"> <img src="packages/images/cerll.jpg" alt="Certificate: Python Programming" loading="lazy"> </div>
                   <div class="col-md-5 col-12">
                     <div class="portfolio-info">
                       <h3>Python Programming</h3>
-                      <p>I have complete</p>
+                      <p>I have completed this course.</p>
                       <span>#python</span> 
                       <span>#programming</span> 
                      </div>
@@ -391,19 +398,19 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="container-fluid main-section">
+      </section>
+      <section class="container-fluid main-section" id="contactus">
         <div class="container">
-          <div class="heading" id="contactus">
+          <div class="heading animated-item">
             <h5>CONTACT</h5>
             <h2><span class="heading-border"></span> CONTACT US<span class="heading-border"></span></h2>
           </div>
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 animated-item">
               <div class="contact-info">
                 <div class="contact-left">
                   <h3>Email</h3>
-                  <a href="mailto:blockbtech01@gmail.com">blockbtech01@gmail.com</a> <a href="mailto:prajwal02024@gmailcom">prajwal02024@gmail.com</a> </div>
+                  <a href="mailto:blockbtech01@gmail.com">blockbtech01@gmail.com</a> <a href="mailto:prajwal02024@gmail.com">prajwal02024@gmail.com</a> </div>
                 <div class="contact-left">
                   <h3>Visit My Studio</h3>
                   <p> Kattu Hemmadi<br>
@@ -422,7 +429,7 @@
                 </ul>
               </div>
             </div>
-            <div class="col-md-8 res-mt">
+            <div class="col-md-8 res-mt animated-item">
               <div class="contact-form">
                 <h3>Get In Touch</h3>
 <!--                 <iframe width="640px" height="480px" src="https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAU7vQ29UNDE3RzFMRlpaWFdLNENUNDBITDNMSVpRVS4u&embed=true" frameborder="0" marginwidth="0" marginheight="0" style="border: none; max-width:100%; max-height:100vh" allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen> </iframe> -->
@@ -865,8 +872,8 @@
       </div>
   
       <!-- rating JavaScript -->
-      <script src="/packages/js/script.js"></script>
-      <footer class="text-center p-3 mt-4 bg-dark text-white" aria-label="Site footer">
+      <script src="packages/js/script.js"></script>
+      <footer class="text-center p-3 mt-4 bg-dark text-white site-footer" aria-label="Site footer">
         <div class="container">
           <div class="row">
             <div class="col-md-6 footer-left">
@@ -878,14 +885,15 @@
               </ul>
             </div>
             <div class="col-md-6 footer-right">
-              <p class="mb-0">© 2025 blockbtech.in | Made with 💻 by Prajwal Dev</p>
+              <p class="mb-0">© 2024 blockbtech.in | Made with 💻 by Prajwal Dev</p>
             </div>
           </div>
         </div>
       </footer>
     </div>
     <!-- Preloader Script -->
-     <script src="packages/js/server.js"></script>
+     <!-- <script type="module" src="packages/js/server.js"></script> -->
+  <script src="packages/js/firebase-config.js"></script>
   <script src="packages/js/index.js"></script>
 </body>
 </html>

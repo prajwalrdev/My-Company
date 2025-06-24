@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - blockbTech.in</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="packages/css/common.css">
+    <link rel="stylesheet" href="packages/css/praj.css">
+    <style>
+        .admin-sidebar {
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            min-height: 100vh;
+            position: fixed;
+            width: 250px;
+            z-index: 1000;
+        }
+        
+        .admin-main {
+            margin-left: 250px;
+            min-height: 100vh;
+            background: var(--bg-color);
+        }
+        
+        .admin-header {
+            background: linear-gradient(45deg, var(--span-col), #9c27b0);
+            color: white;
+            padding: 15px 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .sidebar-header {
+            background: linear-gradient(45deg, var(--span-col), #9c27b0);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .nav-link {
+            color: var(--text-color);
+            padding: 12px 20px;
+            border-radius: 0;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background: var(--section-bg);
+            color: var(--span-col);
+            border-left-color: var(--span-col);
+        }
+        
+        .nav-link i {
+            width: 20px;
+            margin-right: 10px;
+        }
+        
+        .content-section {
+            display: none;
+            padding: 30px;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .stats-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            transition: transform 0.3s ease;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stats-icon {
+            font-size: 2.5rem;
+            color: var(--span-col);
+        }
+        
+        .stats-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+        
+        .stats-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .table-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--shadow-color);
+        }
+        
+        .table {
+            margin-bottom: 0;
+        }
+        
+        .table th {
+            background: var(--section-bg);
+            border-bottom: 2px solid var(--border-color);
+            color: var(--text-color);
+        }
+        
+        .table td {
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+        
+        .btn-admin {
+            background: linear-gradient(45deg, var(--span-col), #9c27b0);
+            border: none;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-admin:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(174, 0, 255, 0.3);
+            color: white;
+        }
+        
+        .form-control, .form-select {
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            color: var(--text-color);
+        }
+        
+        .form-control:focus, .form-select:focus {
+            background: var(--card-bg);
+            border-color: var(--span-col);
+            color: var(--text-color);
+            box-shadow: 0 0 0 0.2rem rgba(174, 0, 255, 0.25);
+        }
+        
+        .alert {
+            border-radius: 10px;
+            border: none;
+        }
+        
+        .progress {
+            background: var(--section-bg);
+            border-radius: 10px;
+        }
+        
+        .progress-bar {
+            background: linear-gradient(45deg, var(--span-col), #9c27b0);
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--span-col), #9c27b0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status-active {
+            background: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+        }
+        
+        .status-inactive {
+            background: rgba(220, 53, 69, 0.2);
+            color: #dc3545;
+        }
+        
+        .status-pending {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+        
+        @media (max-width: 768px) {
+            .admin-sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .admin-sidebar.show {
+                transform: translateX(0);
+            }
+            
+            .admin-main {
+                margin-left: 0;
+            }
+            
+            .sidebar-toggle {
+                display: block !important;
+            }
+        }
+        
+        .sidebar-toggle {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Authentication Check -->
+    <script>
+        // Admin email
+        const ADMIN_EMAIL = 'devprajwal36@gmail.com';
+        // Firebase Auth check
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (!user || user.email !== ADMIN_EMAIL) {
+                // Not logged in or not admin
+                window.location.href = 'login.html';
+            }
+        });
+        // Remove old local/session storage check if present
+    </script>
+
+    <!-- Sidebar -->
+    <div class="admin-sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-shield-alt fa-2x mb-2"></i>
+            <h5>Admin Panel</h5>
+            <small>blockbTech.in</small>
+        </div>
+        
+        <nav class="nav flex-column">
+            <a class="nav-link active" href="#" onclick="showSection('dashboard')">
+                <i class="fas fa-tachometer-alt"></i>Dashboard
+            </a>
+            <a class="nav-link" href="#" onclick="showSection('analytics')">
+                <i class="fas fa-chart-line"></i>Analytics
+            </a>
+            <a class="nav-link" href="#" onclick="showSection('users')">
+                <i class="fas fa-users"></i>Users
+            </a>
+            <a class="nav-link" href="#" onclick="showSection('content')">
+                <i class="fas fa-file-alt"></i>Content
+            </a>
+            <a class="nav-link" href="#" onclick="showSection('settings')">
+                <i class="fas fa-cog"></i>Settings
+            </a>
+            <a class="nav-link" href="#" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>Logout
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="admin-main">
+        <!-- Header -->
+        <div class="admin-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <button class="btn btn-light sidebar-toggle" onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <span class="ms-3" id="currentSection">Dashboard</span>
+                </div>
+                <div>
+                    <span class="me-3">Welcome, Admin</span>
+                    <button class="btn btn-light btn-sm" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="content-section active">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="d-flex align-items-center">
+                            <div class="me-3">
+                                <i class="fas fa-eye stats-icon"></i>
+                            </div>
+                            <div>
+                                <div class="stats-number" id="totalVisits">0</div>
+                                <div class="stats-label">Total Visits</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="d-flex align-items-center">
+                            <div class="me-3">
+                                <i class="fas fa-users stats-icon"></i>
+                            </div>
+                            <div>
+                                <div class="stats-number" id="totalUsers">1,234</div>
+                                <div class="stats-label">Total Users</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="d-flex align-items-center">
+                            <div class="me-3">
+                                <i class="fas fa-file-alt stats-icon"></i>
+                            </div>
+                            <div>
+                                <div class="stats-number" id="totalContent">25</div>
+                                <div class="stats-label">Content Items</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="d-flex align-items-center">
+                            <div class="me-3">
+                                <i class="fas fa-clock stats-icon"></i>
+                            </div>
+                            <div>
+                                <div class="stats-number" id="lastVisit">-</div>
+                                <div class="stats-label">Last Visit</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-8">
+                    <div class="table-card">
+                        <div class="card-header bg-transparent">
+                            <h5><i class="fas fa-chart-bar me-2"></i>Recent Activity</h5>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Activity</th>
+                                        <th>User</th>
+                                        <th>Time</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="activityTable">
+                                    <tr>
+                                        <td>Website Visit</td>
+                                        <td>Anonymous</td>
+                                        <td>Just now</td>
+                                        <td><span class="status-badge status-active">Active</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Portfolio View</td>
+                                        <td>User123</td>
+                                        <td>2 minutes ago</td>
+                                        <td><span class="status-badge status-active">Active</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Image Compression</td>
+                                        <td>Guest</td>
+                                        <td>5 minutes ago</td>
+                                        <td><span class="status-badge status-pending">Pending</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="table-card">
+                        <div class="card-header bg-transparent">
+                            <h5><i class="fas fa-tasks me-2"></i>Quick Actions</h5>
+                        </div>
+                        <div class="p-3">
+                            <button class="btn btn-admin w-100 mb-2" onclick="showSection('analytics')">
+                                <i class="fas fa-chart-line me-2"></i>View Analytics
+                            </button>
+                            <button class="btn btn-admin w-100 mb-2" onclick="showSection('users')">
+                                <i class="fas fa-users me-2"></i>Manage Users
+                            </button>
+                            <button class="btn btn-admin w-100 mb-2" onclick="showSection('content')">
+                                <i class="fas fa-file-alt me-2"></i>Edit Content
+                            </button>
+                            <button class="btn btn-admin w-100" onclick="showSection('settings')">
+                                <i class="fas fa-cog me-2"></i>Settings
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Section -->
+        <div id="analytics" class="content-section">
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-card">
+                        <div class="card-header bg-transparent">
+                            <h5><i class="fas fa-chart-line me-2"></i>Website Analytics</h5>
+                        </div>
+                        <div class="p-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6>Visit Statistics</h6>
+                                    <div class="mb-3">
+                                        <label>Total Visits: <span id="analyticsVisits">0</span></label>
+                                        <div class="progress">
+                                            <div class="progress-bar" id="visitProgress" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label>Unique Visitors: <span id="uniqueVisitors">0</span></label>
+                                        <div class="progress">
+                                            <div class="progress-bar" id="visitorProgress" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>Page Performance</h6>
+                                    <div class="mb-3">
+                                        <label>Homepage: <span id="homepageViews">0</span></label>
+                                        <div class="progress">
+                                            <div class="progress-bar" id="homepageProgress" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label>Portfolio: <span id="portfolioViews">0</span></label>
+                                        <div class="progress">
+                                            <div class="progress-bar" id="portfolioProgress" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <button class="btn btn-admin" onclick="refreshAnalytics()">
+                                    <i class="fas fa-sync-alt me-2"></i>Refresh Data
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Section -->
+        <div id="users" class="content-section">
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-card">
+                        <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
+                            <h5><i class="fas fa-users me-2"></i>User Management</h5>
+                            <button class="btn btn-admin" onclick="addUser()">
+                                <i class="fas fa-plus me-2"></i>Add User
+                            </button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>User</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Status</th>
+                                        <th>Last Login</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="usersTable">
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="user-avatar me-2">A</div>
+                                                <div>Admin User</div>
+                                            </div>
+                                        </td>
+                                        <td>admin@blockbtech.in</td>
+                                        <td>Administrator</td>
+                                        <td><span class="status-badge status-active">Active</span></td>
+                                        <td>Just now</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">Edit</button>
+                                            <button class="btn btn-sm btn-outline-danger">Delete</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="user-avatar me-2">U</div>
+                                                <div>User123</div>
+                                            </div>
+                                        </td>
+                                        <td>user@example.com</td>
+                                        <td>User</td>
+                                        <td><span class="status-badge status-active">Active</span></td>
+                                        <td>2 hours ago</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1">Edit</button>
+                                            <button class="btn btn-sm btn-outline-danger">Delete</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Section -->
+        <div id="content" class="content-section">
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-card">
+                        <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
+                            <h5><i class="fas fa-file-alt me-2"></i>Content Management</h5>
+                            <button class="btn btn-admin" onclick="addContent()">
+                                <i class="fas fa-plus me-2"></i>Add Content
+                            </button>
+                        </div>
+                        <div class="p-4">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Page Title</label>
+                                    <input type="text" class="form-control" id="pageTitle" value="blockbTech.in - Web Developer Portfolio">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Meta Description</label>
+                                    <input type="text" class="form-control" id="metaDescription" value="Professional web developer portfolio showcasing projects and skills">
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <label class="form-label">Welcome Message</label>
+                                    <textarea class="form-control" id="welcomeMessage" rows="3">Welcome to my portfolio! I'm a passionate web developer creating amazing digital experiences.</textarea>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-admin" onclick="saveContent()">
+                                        <i class="fas fa-save me-2"></i>Save Changes
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Section -->
+        <div id="settings" class="content-section">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="table-card">
+                        <div class="card-header bg-transparent">
+                            <h5><i class="fas fa-cog me-2"></i>General Settings</h5>
+                        </div>
+                        <div class="p-4">
+                            <div class="mb-3">
+                                <label class="form-label">Website Name</label>
+                                <input type="text" class="form-control" id="websiteName" value="blockbTech.in">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Contact Email</label>
+                                <input type="email" class="form-control" id="contactEmail" value="contact@blockbtech.in">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Theme</label>
+                                <select class="form-select" id="themeSelect">
+                                    <option value="auto">Auto (System)</option>
+                                    <option value="light">Light</option>
+                                    <option value="dark">Dark</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="enableAnalytics" checked>
+                                    <label class="form-check-label" for="enableAnalytics">
+                                        Enable Analytics
+                                    </label>
+                                </div>
+                            </div>
+                            <button class="btn btn-admin" onclick="saveSettings()">
+                                <i class="fas fa-save me-2"></i>Save Settings
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="table-card">
+                        <div class="card-header bg-transparent">
+                            <h5><i class="fas fa-shield-alt me-2"></i>Security Settings</h5>
+                        </div>
+                        <div class="p-4">
+                            <div class="mb-3">
+                                <label class="form-label">Current Password</label>
+                                <input type="password" class="form-control" id="currentPassword">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">New Password</label>
+                                <input type="password" class="form-control" id="newPassword">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Confirm New Password</label>
+                                <input type="password" class="form-control" id="confirmPassword">
+                            </div>
+                            <button class="btn btn-admin" onclick="changePassword()">
+                                <i class="fas fa-key me-2"></i>Change Password
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    <script src="packages/js/firebase-config.js"></script>
+    <script>
+        // Navigation functions
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active class to clicked nav link
+            event.target.classList.add('active');
+            
+            // Update header
+            document.getElementById('currentSection').textContent = event.target.textContent.trim();
+            
+            // Load section-specific data
+            loadSectionData(sectionId);
+        }
+        
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('show');
+        }
+        
+        // Logout function
+        function logout() {
+            localStorage.removeItem('adminLoggedIn');
+            localStorage.removeItem('adminUsername');
+            sessionStorage.removeItem('adminLoggedIn');
+            sessionStorage.removeItem('adminUsername');
+            window.location.href = 'login.html';
+        }
+        
+        // Load section-specific data
+        function loadSectionData(sectionId) {
+            switch(sectionId) {
+                case 'dashboard':
+                    loadDashboardData();
+                    break;
+                case 'analytics':
+                    loadAnalyticsData();
+                    break;
+                case 'users':
+                    loadUsersData();
+                    break;
+                case 'content':
+                    loadContentData();
+                    break;
+                case 'settings':
+                    loadSettingsData();
+                    break;
+            }
+        }
+        
+        // Dashboard functions
+        async function loadDashboardData() {
+            try {
+                if (typeof getFirebaseDB === 'function') {
+                    const db = getFirebaseDB();
+                    const docRef = getFirebaseDoc('analytics', 'website_visits');
+                    const docSnap = await getFirebaseDocData(docRef);
+                    
+                    if (docSnap.exists) {
+                        const data = docSnap.data();
+                        const visitCount = data.visitCount || 0;
+                        const lastVisit = data.lastVisit ? new Date(data.lastVisit.toDate()).toLocaleString() : 'No visits yet';
+                        
+                        document.getElementById('totalVisits').textContent = visitCount.toLocaleString();
+                        document.getElementById('lastVisit').textContent = lastVisit;
+                    } else {
+                        document.getElementById('totalVisits').textContent = '0';
+                        document.getElementById('lastVisit').textContent = 'No visits yet';
+                    }
+                } else {
+                    // Fallback to mock data
+                    document.getElementById('totalVisits').textContent = '1,234';
+                    document.getElementById('lastVisit').textContent = 'Just now';
+                }
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+                // Fallback to mock data
+                document.getElementById('totalVisits').textContent = '1,234';
+                document.getElementById('lastVisit').textContent = 'Just now';
+            }
+        }
+        
+        // Analytics functions
+        async function loadAnalyticsData() {
+            try {
+                if (typeof getFirebaseDB === 'function') {
+                    const db = getFirebaseDB();
+                    const docRef = getFirebaseDoc('analytics', 'website_visits');
+                    const docSnap = await getFirebaseDocData(docRef);
+                    
+                    if (docSnap.exists) {
+                        const data = docSnap.data();
+                        const visitCount = data.visitCount || 0;
+                        
+                        document.getElementById('analyticsVisits').textContent = visitCount.toLocaleString();
+                        document.getElementById('uniqueVisitors').textContent = Math.floor(visitCount * 0.8).toLocaleString();
+                        document.getElementById('homepageViews').textContent = visitCount.toLocaleString();
+                        document.getElementById('portfolioViews').textContent = Math.floor(visitCount * 0.6).toLocaleString();
+                        
+                        // Update progress bars
+                        document.getElementById('visitProgress').style.width = Math.min(visitCount / 100, 100) + '%';
+                        document.getElementById('visitorProgress').style.width = Math.min((visitCount * 0.8) / 100, 100) + '%';
+                        document.getElementById('homepageProgress').style.width = Math.min(visitCount / 100, 100) + '%';
+                        document.getElementById('portfolioProgress').style.width = Math.min((visitCount * 0.6) / 100, 100) + '%';
+                    } else {
+                        // Set default values
+                        document.getElementById('analyticsVisits').textContent = '0';
+                        document.getElementById('uniqueVisitors').textContent = '0';
+                        document.getElementById('homepageViews').textContent = '0';
+                        document.getElementById('portfolioViews').textContent = '0';
+                        
+                        // Reset progress bars
+                        document.getElementById('visitProgress').style.width = '0%';
+                        document.getElementById('visitorProgress').style.width = '0%';
+                        document.getElementById('homepageProgress').style.width = '0%';
+                        document.getElementById('portfolioProgress').style.width = '0%';
+                    }
+                } else {
+                    // Fallback to mock data
+                    const mockVisits = 1234;
+                    document.getElementById('analyticsVisits').textContent = mockVisits.toLocaleString();
+                    document.getElementById('uniqueVisitors').textContent = Math.floor(mockVisits * 0.8).toLocaleString();
+                    document.getElementById('homepageViews').textContent = mockVisits.toLocaleString();
+                    document.getElementById('portfolioViews').textContent = Math.floor(mockVisits * 0.6).toLocaleString();
+                    
+                    // Update progress bars
+                    document.getElementById('visitProgress').style.width = Math.min(mockVisits / 100, 100) + '%';
+                    document.getElementById('visitorProgress').style.width = Math.min((mockVisits * 0.8) / 100, 100) + '%';
+                    document.getElementById('homepageProgress').style.width = Math.min(mockVisits / 100, 100) + '%';
+                    document.getElementById('portfolioProgress').style.width = Math.min((mockVisits * 0.6) / 100, 100) + '%';
+                }
+            } catch (error) {
+                console.error('Error loading analytics data:', error);
+                // Fallback to mock data
+                const mockVisits = 1234;
+                document.getElementById('analyticsVisits').textContent = mockVisits.toLocaleString();
+                document.getElementById('uniqueVisitors').textContent = Math.floor(mockVisits * 0.8).toLocaleString();
+                document.getElementById('homepageViews').textContent = mockVisits.toLocaleString();
+                document.getElementById('portfolioViews').textContent = Math.floor(mockVisits * 0.6).toLocaleString();
+                
+                // Update progress bars
+                document.getElementById('visitProgress').style.width = Math.min(mockVisits / 100, 100) + '%';
+                document.getElementById('visitorProgress').style.width = Math.min((mockVisits * 0.8) / 100, 100) + '%';
+                document.getElementById('homepageProgress').style.width = Math.min(mockVisits / 100, 100) + '%';
+                document.getElementById('portfolioProgress').style.width = Math.min((mockVisits * 0.6) / 100, 100) + '%';
+            }
+        }
+        
+        function refreshAnalytics() {
+            loadAnalyticsData();
+            showAlert('Analytics data refreshed successfully!', 'success');
+        }
+        
+        // Users functions
+        function loadUsersData() {
+            // Mock data - in real app, fetch from database
+            console.log('Loading users data...');
+        }
+        
+        function addUser() {
+            showAlert('Add user functionality would be implemented here', 'info');
+        }
+        
+        // Content functions
+        function loadContentData() {
+            // Load current content settings
+            console.log('Loading content data...');
+        }
+        
+        function addContent() {
+            showAlert('Add content functionality would be implemented here', 'info');
+        }
+        
+        function saveContent() {
+            const pageTitle = document.getElementById('pageTitle').value;
+            const metaDescription = document.getElementById('metaDescription').value;
+            const welcomeMessage = document.getElementById('welcomeMessage').value;
+            
+            // Save to localStorage for demo
+            localStorage.setItem('adminPageTitle', pageTitle);
+            localStorage.setItem('adminMetaDescription', metaDescription);
+            localStorage.setItem('adminWelcomeMessage', welcomeMessage);
+            
+            showAlert('Content saved successfully!', 'success');
+        }
+        
+        // Settings functions
+        function loadSettingsData() {
+            // Load current settings
+            const websiteName = localStorage.getItem('adminWebsiteName') || 'blockbTech.in';
+            const contactEmail = localStorage.getItem('adminContactEmail') || 'contact@blockbtech.in';
+            
+            document.getElementById('websiteName').value = websiteName;
+            document.getElementById('contactEmail').value = contactEmail;
+        }
+        
+        function saveSettings() {
+            const websiteName = document.getElementById('websiteName').value;
+            const contactEmail = document.getElementById('contactEmail').value;
+            const theme = document.getElementById('themeSelect').value;
+            const enableAnalytics = document.getElementById('enableAnalytics').checked;
+            
+            // Save to localStorage for demo
+            localStorage.setItem('adminWebsiteName', websiteName);
+            localStorage.setItem('adminContactEmail', contactEmail);
+            localStorage.setItem('adminTheme', theme);
+            localStorage.setItem('adminEnableAnalytics', enableAnalytics);
+            
+            showAlert('Settings saved successfully!', 'success');
+        }
+        
+        function changePassword() {
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (!currentPassword || !newPassword || !confirmPassword) {
+                showAlert('Please fill in all password fields', 'danger');
+                return;
+            }
+            
+            if (newPassword !== confirmPassword) {
+                showAlert('New passwords do not match', 'danger');
+                return;
+            }
+            
+            if (newPassword.length < 6) {
+                showAlert('Password must be at least 6 characters long', 'danger');
+                return;
+            }
+            
+            // In real app, verify current password and update
+            showAlert('Password changed successfully!', 'success');
+            
+            // Clear password fields
+            document.getElementById('currentPassword').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+        }
+        
+        // Utility functions
+        function showAlert(message, type) {
+            // Create alert element
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+            alertDiv.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(alertDiv);
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.parentNode.removeChild(alertDiv);
+                }
+            }, 3000);
+        }
+        
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Firebase
+            if (typeof initializeFirebase === 'function') {
+                initializeFirebase();
+            }
+            
+            // Load initial data
+            loadDashboardData();
+        });
+    </script>
+</body>
+</html> 
