@@ -65,40 +65,89 @@
 	<!-- Open Graph / Facebook -->
 	<meta property="og:title" content="Prajwal Dev | blockbTech.in - Tech Innovation & Web Development">
 	<meta property="og:description" content="Showcasing projects, sharing knowledge, and growing as a developer.">
-	<meta property="og:image" content="/packages/images/block4.png">
+	<meta property="og:image" content="https://blockbtech.in/packages/images/block4.png">
 	<meta property="og:type" content="website">
 	<!-- Twitter -->
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="Prajwal Dev | blockbTech.in - Tech Innovation & Web Development">
 	<meta name="twitter:description" content="Showcasing projects, sharing knowledge, and growing as a developer.">
-	<meta name="twitter:image" content="/packages/images/block4.png">
+	<meta name="twitter:image" content="https://blockbtech.in/packages/images/block4.png">
+    <meta name="robots" content="index, follow">
 	<!--- Bootstrap 5 CSS link --->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!--- Font Awesom CSS link --->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
  	<!--- Live Jquery URL--->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js" defer></script>
     <!--- Bootstrap 5 Jquery URL--->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
     <!--- Owl Carousel Js And CSS For Testimonial Slider--->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css">
     <!--- Firebase SDK --->
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js" defer></script>
     <!--- style.css, where we will write our custom css--->
     <link rel="stylesheet" href="packages/css/common.css">
     <link rel="stylesheet" href="packages/css/praj.css">
     <link rel="icon" href="packages/images/block4.png">
     <meta name="google-site-verification" content="REPLACE_WITH_YOUR_VERIFICATION_CODE" />
+    <style>
+      :root {
+        --primary-color: #007bff;
+        --span-col: rgb(174, 0, 255);
+        --body-bg: #ffffff;
+        --text-color: #333333;
+        --navbar-bg: rgba(255, 255, 255, 0.95);
+        --card-bg: #ffffff;
+        --border-color: #dee2e6;
+        --shadow-color: rgba(0, 0, 0, 0.1);
+        --section-bg: #f8f9fa;
+        --heading-color: #292929;
+      }
+      body { background-color: var(--body-bg); color: var(--text-color); }
+      .navbar { background: var(--navbar-bg); padding: 1rem 0; border-bottom: 1px solid var(--border-color); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+      .navbar-brand { font-size: 1.5rem; font-weight: 700; color: var(--heading-color); display: flex; align-items: center; }
+      .nav-link { color: var(--heading-color); font-weight: 500; padding: 0.5rem 1rem; border-radius: 8px; transition: all 0.3s; }
+      .nav-link:hover, .nav-link.active { color: var(--span-col); background: rgba(0,0,0,0.05); }
+      .theme-switcher { background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-color); cursor: pointer; font-size: 1.25rem; padding: 0.5rem; border-radius: 50%; margin-left: 15px; }
+      .main-section { padding-top: 50px; padding-bottom: 100px; }
+      .banner-left h1 { font-size: 20px; font-weight: 900; }
+      .banner-left h2 { color: #292929; font-size: 60px; font-weight: 700; }
+      .banner-left h3 { color: #292929; font-weight: 600; font-size: 28px; margin-bottom: 30px; }
+      .banner-section { width: 100%; display: flex; gap: 15px; margin-top: 2rem; }
+      .banner-section a { display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: #f8f9fa; border-radius: 50%; color: #333; font-size: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: all 0.3s; }
+      .banner-section a:hover { background: var(--span-col); color: white; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(174,0,255,0.3); }
+      .banner-top { position: relative; text-align: center; padding: 20px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; }
+      .banner-img { position: relative; display: inline-block; border-radius: 50%; overflow: hidden; box-shadow: 0 10px 30px var(--shadow-color); background: var(--card-bg); padding: 10px; max-width: 300px; width: 100%; }
+      .banner-img img.main-icon { width: 100%; height: auto; border-radius: 50%; transition: all 0.3s; }
+      .preloader { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 9999; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white; letter-spacing: 3px; font-weight: bold; text-transform: uppercase; background: linear-gradient(45deg, #fff, #f0f0f0); }
+      .preloader > span { position: relative; z-index: 10; }
+      /* ...add more as needed for above-the-fold... */
+    </style>
+    <!-- Preload main CSS, load rest non-blocking -->
+    <link rel="preload" href="packages/css/common.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="packages/css/praj.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="packages/css/common.css"><link rel="stylesheet" href="packages/css/praj.css"></noscript>
+    <!-- Defer non-critical JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css"></noscript>
 </head>
 <body>
+<!-- Skip to main content link for accessibility -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
 <!-- Preloader -->
 <div class="preloader">
   <span>BlockBTech</span>
   <div class="circle-third"></div>
 </div>
-<div id="main-content">
+<div id="main-content" role="main">
   <!-- ...existing code... -->	  
    <nav class="navbar navbar-expand-lg fixed-top" id="navbar_top" role="navigation" aria-label="Primary navigation">
   <div class="container">
@@ -132,7 +181,7 @@
           <a class="nav-link" href="#contactus">Contact</a>
         </li>
       </ul>
-      <button class="theme-switcher" id="themeSwitcher" aria-label="Toggle theme">
+      <button class="theme-switcher" id="themeSwitcher" aria-label="Toggle theme mode">
         <i class="fas fa-sun"></i>
         <i class="fas fa-moon"></i>
       </button>
@@ -150,26 +199,32 @@
                 <span class="head-bottom"></span>
                 <h3 class="typing">Web <span class="span-col">Developer</span></h3>
                 <div class="banner-section">
-                  <a href="https://www.linkedin.com/in/prajwal-r-020898257?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">
-                    <i class="fab fa-linkedin-in"></i>
+                  <a href="https://www.linkedin.com/in/prajwal-r-020898257?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" aria-label="LinkedIn Profile">
+                    <i class="fab fa-linkedin-in" aria-hidden="true"></i>
                   </a>
-                  <a href="https://youtube.com/@kundapuratrolling5583?feature=shared">
-                    <i class="fab fa-youtube"></i>
+                  <a href="https://youtube.com/@kundapuratrolling5583?feature=shared" aria-label="YouTube Channel">
+                    <i class="fab fa-youtube" aria-hidden="true"></i>
                   </a>
-                  <a href="https://www.instagram.com/prajwal_dev_0424_?igsh=OGQ5ZDc2ODk2ZA==">
-                    <i class="fab fa-instagram"></i>
+                  <a href="https://www.instagram.com/prajwal_dev_0424_?igsh=OGQ5ZDc2ODk2ZA==" aria-label="Instagram Profile">
+                    <i class="fab fa-instagram" aria-hidden="true"></i>
                   </a>
-                  <a href="https://github.com/prajwaldevdaiga24">
-                    <i class="fab fa-github"></i>
+                  <a href="https://github.com/prajwaldevdaiga24" aria-label="GitHub Profile">
+                    <i class="fab fa-github" aria-hidden="true"></i>
                   </a>
                 </div>
               </div>
             </div>
             <div class="col-md-6 col-12">
               <div class="banner-top">
-                <img class="banner-scratch-bg" src="packages/images/black-circle-png-images-hd-1714.png" alt="Abstract black circle background for BlockBTech banner" loading="lazy">
+                <picture>
+                  <source srcset="packages/images/black-circle-png-images-hd-1714.webp" type="image/webp">
+                  <img class="banner-scratch-bg" src="packages/images/black-circle-png-images-hd-1714.png" alt="Abstract black circle background for BlockBTech banner" loading="lazy">
+                </picture>
                 <div class="banner-img">
-                  <img class="main-icon" src="packages/images/block2.jpeg" alt="BlockBTech logo icon" loading="lazy"> 
+                  <picture>
+                    <source srcset="packages/images/block2.webp" type="image/webp">
+                    <img class="main-icon" src="packages/images/block2.jpeg" alt="BlockBTech logo icon" width="300" height="300" loading="lazy" style="aspect-ratio:1/1;"> 
+                  </picture>
                 </div>
               </div>
             </div>
@@ -184,7 +239,12 @@
           </div>
           <div class="row">
             <div class="col-lg-5 col-md-5 col-12 animated-item">
-              <div class="about-img"> <img src="packages/images/Prajwal.jpg" alt="Prajwal Dev profile photo" loading="lazy"> </div>
+              <div class="about-img">
+                <picture>
+                  <source srcset="packages/images/Prajwal.webp" type="image/webp">
+                  <img src="packages/images/Prajwal.jpg" alt="Prajwal Dev profile photo" width="400" height="400" loading="lazy" style="aspect-ratio:1/1;">
+                </picture>
+              </div>
             </div>
             <div class="col-lg-7 col-md-7 col-12 animated-item">
               <div class="about-info">
@@ -354,7 +414,12 @@
             <div class="col-lg-6 col-md-12 col-12 animated-item">
               <div class="portfolio-section">
                 <div class="row">
-                  <div class="col-md-7 col-12"> <img src="packages/images/cer.jpg" alt="Certificate: Time management - Infosys Springboard" loading="lazy"> </div>
+                  <div class="col-md-7 col-12">
+                    <picture>
+                      <source srcset="packages/images/cer.webp" type="image/webp">
+                      <img src="packages/images/cer.jpg" alt="Certificate: Time management - Infosys Springboard" width="350" height="250" loading="lazy">
+                    </picture>
+                  </div>
                   <div class="col-md-5 col-12">
                     <div class="portfolio-info">
                       <h3>Time management</h3>
@@ -369,7 +434,12 @@
             <div class="col-lg-6 col-md-12 col-12 animated-item">
               <div class="portfolio-section">
                 <div class="row">
-                  <div class="col-md-7 col-12"> <img src="packages/images/cerl.jpg" alt="Certificate: Negotiation skill - Infosys Springboard" loading="lazy"> </div>
+                  <div class="col-md-7 col-12">
+                    <picture>
+                      <source srcset="packages/images/cerl.webp" type="image/webp">
+                      <img src="packages/images/cerl.jpg" alt="Certificate: Negotiation skill - Infosys Springboard" width="350" height="250" loading="lazy">
+                    </picture>
+                  </div>
                   <div class="col-md-5 col-12">
                     <div class="portfolio-info">
                       <h3>Negotiation skill</h3>
@@ -384,7 +454,12 @@
             <div class="col-lg-6 col-md-12 col-12 mt-4 animated-item">
               <div class="portfolio-section">
                 <div class="row">
-                  <div class="col-md-7 col-12"> <img src="packages/images/cerll.jpg" alt="Certificate: Python Programming" loading="lazy"> </div>
+                  <div class="col-md-7 col-12">
+                    <picture>
+                      <source srcset="packages/images/cerll.webp" type="image/webp">
+                      <img src="packages/images/cerll.jpg" alt="Certificate: Python Programming" width="350" height="250" loading="lazy">
+                    </picture>
+                  </div>
                   <div class="col-md-5 col-12">
                     <div class="portfolio-info">
                       <h3>Python Programming</h3>
@@ -894,6 +969,42 @@
     <!-- Preloader Script -->
      <!-- <script type="module" src="packages/js/server.js"></script> -->
   <script src="packages/js/firebase-config.js"></script>
-  <script src="packages/js/index.js"></script>
+  <script src="packages/js/index.js" defer></script>
+  <script>
+    // Conditionally load Owl Carousel
+    const testimonialSection = document.querySelector('#testimonial');
+    const loadOwlCarousel = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Load JS
+                const owlScript = document.createElement('script');
+                owlScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js';
+                owlScript.defer = true;
+                document.body.appendChild(owlScript);
+
+                owlScript.onload = () => {
+                    // Initialize Carousel
+                    $('.testimonial-carousel').owlCarousel({
+                        loop: true,
+                        margin: 10,
+                        nav: false,
+                        dots: true,
+                        responsive:{
+                            0:{ items:1 },
+                            600:{ items:2 },
+                            1000:{ items:3 }
+                        }
+                    });
+                };
+                observer.unobserve(testimonialSection);
+            }
+        });
+    };
+
+    const testimonialObserver = new IntersectionObserver(loadOwlCarousel);
+    if (testimonialSection) {
+        testimonialObserver.observe(testimonialSection);
+    }
+  </script>
 </body>
 </html>
