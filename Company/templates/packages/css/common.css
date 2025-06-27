@@ -105,8 +105,8 @@ body.dark-mode .theme-switcher .fa-sun { display: none; }
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   padding: 1rem 0;
   background: var(--navbar-bg);
-  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border-color);
 }
 
@@ -210,6 +210,8 @@ footer a:hover {
   background: linear-gradient(45deg, var(--primary-color), var(--success-color));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  color-adjust: exact;
+  print-color-adjust: exact;
 }
 
 /* Responsive Design */
@@ -263,4 +265,18 @@ footer a:hover {
   background: var(--primary-color);
   z-index: 9999;
   transition: width 0.1s ease;
+}
+
+/* Footer text color fix for both modes */
+footer, .footer-section {
+  background: #181818 !important;
+}
+footer, .footer-section, .footer-left ul li a, .footer-right p {
+  color: #fff !important;
+}
+body:not(.dark-mode) footer, body:not(.dark-mode) .footer-section, body:not(.dark-mode) .footer-right p {
+  color: #fff !important;
+}
+body.dark-mode footer, body.dark-mode .footer-section, body.dark-mode .footer-right p {
+  color: #fff !important;
 } 

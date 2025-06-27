@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
+    var mainContent = document.getElementById('main-content');
+    if (mainContent) mainContent.style.display = 'block';
+
     // Theme Switcher
     const themeSwitcher = document.getElementById('themeSwitcher');
     const body = document.body;
@@ -39,24 +42,24 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize visit tracking (silent)
     trackVisit();
 
-    // Run after full page load
+  // Run after full page load
     window.addEventListener('load', function() {
-      const preloader = document.querySelector('.preloader');
-      const mainContent = document.getElementById('main-content');
+    const preloader = document.querySelector('.preloader');
+    const mainContent = document.getElementById('main-content');
       const footer = document.querySelector('.site-footer');
 
       if (preloader) {
-        // Fade out preloader
+      // Fade out preloader
         preloader.style.transition = 'opacity 0.5s ease';
-        preloader.style.opacity = '0';
+      preloader.style.opacity = '0';
         preloader.style.visibility = 'hidden';
       }
 
       if (mainContent) {
-        // Show main content after fade out
-        setTimeout(() => {
-          preloader.style.display = 'none';
-          mainContent.style.display = 'block';
+      // Show main content after fade out
+      setTimeout(() => {
+        preloader.style.display = 'none';
+        mainContent.style.display = 'block';
           if (footer) {
             footer.style.visibility = 'visible';
           }
@@ -106,22 +109,27 @@ document.addEventListener('DOMContentLoaded', function() {
       if (form) {
         form.addEventListener('submit', async function(e) {
           e.preventDefault();
-          const submitBtn = this.querySelector('button[type="submit"]');
-          submitBtn.classList.add('btn-loading');
-          
+          // Get reCAPTCHA token (if using)
+          const recaptchaToken = grecaptcha.getResponse();
+          if (!recaptchaToken) {
+            alert('Please complete the reCAPTCHA.');
+            return;
+          }
+          // Gather form data
+          const name = form.elements['name'] ? form.elements['name'].value : '';
+          const email = form.elements['email'] ? form.elements['email'].value : '';
+          const message = form.elements['message'] ? form.elements['message'].value : '';
           try {
-            // Simulate form submission
-            await new Promise(resolve => setTimeout(resolve, 1500));
-            
-            const toast = new bootstrap.Toast(document.getElementById('toast'));
-            document.getElementById('toastMessage').textContent = 'Message sent successfully!';
-            toast.show();
-            form.reset();
-          } catch (error) {
-            document.getElementById('toastMessage').textContent = 'Error sending message. Please try again.';
-            toast.show();
-          } finally {
-            submitBtn.classList.remove('btn-loading');
+            await firebase.firestore().collection('contacts').add({
+              name,
+              email,
+              message,
+              recaptchaToken,
+              timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            window.location.href = 'thank-you.html';
+          } catch (err) {
+            alert('Submission failed: ' + err.message);
           }
         });
       }
@@ -220,9 +228,9 @@ document.addEventListener('DOMContentLoaded', function() {
               top: offsetPosition,
               behavior: 'smooth'
             });
-          }
-        });
-      });
+      }
+    });
+  });
 
       // Close mobile menu when clicking outside
       document.addEventListener('click', function(e) {
@@ -241,17 +249,19 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
         e.preventDefault();
-        
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          const headerOffset = 80;
-          const elementPosition = target.getBoundingClientRect().top;
-          const offsetPosition = elementPosition - headerOffset;
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          });
+        const href = this.getAttribute('href');
+        // Only scroll if href is not just '#' and is a valid selector
+        if (href && href !== '#') {
+          const target = document.querySelector(href);
+          if (target) {
+            const headerOffset = 80;
+            const elementPosition = target.getBoundingClientRect().top;
+            const offsetPosition = elementPosition - headerOffset;
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }
         }
       });
     });
@@ -636,5 +646,128 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Analytics tracking error:', err);
             }
         })();
+    })();
+
+    // Visitor Entry Modal Logic
+    (function() {
+      const modal = document.getElementById('visitorModal');
+      const form = document.getElementById('visitorModalForm');
+      if (!modal || !form) return;
+
+      // Check if visitor info is already stored
+      const visitorInfo = localStorage.getItem('visitorInfo');
+      if (!visitorInfo) {
+        // Show modal and block scroll
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        // Focus first input
+        setTimeout(() => {
+          form.elements[0].focus();
+        }, 100);
+      }
+
+      // Prevent closing modal by clicking backdrop or pressing Esc
+      modal.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') e.preventDefault();
+      });
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal || e.target.classList.contains('visitor-modal__backdrop')) {
+          e.stopPropagation();
+        }
+      });
+
+      // Trap focus inside modal
+      form.addEventListener('keydown', function(e) {
+        const focusable = form.querySelectorAll('input, button');
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.key === 'Tab') {
+          if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      });
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = form.visitorName.value.trim();
+        const email = form.visitorEmail.value.trim();
+        if (name.length < 2 || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+          form.visitorName.classList.toggle('is-invalid', name.length < 2);
+          form.visitorEmail.classList.toggle('is-invalid', !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email));
+          return;
+        }
+        // Store info in localStorage
+        localStorage.setItem('visitorInfo', JSON.stringify({ name, email }));
+
+        // Store info in Firestore
+        if (window.firebase && firebase.firestore) {
+          firebase.firestore().collection('visitors').add({
+            name: name,
+            email: email,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+          }).catch(function(error) {
+            console.error('Error saving visitor info:', error);
+          });
+        }
+
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+      });
+    })();
+
+    // Mobile Sidebar Logic
+    (function() {
+      const sidebar = document.getElementById('mobileSidebar');
+      const openBtn = document.getElementById('sidebarOpenBtn');
+      const closeBtn = document.getElementById('sidebarCloseBtn');
+      const themeBtn = document.getElementById('sidebarThemeSwitcher');
+
+      if (!sidebar || !openBtn || !closeBtn || !themeBtn) return;
+
+      // Open sidebar
+      openBtn.addEventListener('click', function() {
+        sidebar.classList.add('open');
+        sidebar.removeAttribute('aria-hidden');
+        sidebar.removeAttribute('inert');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => {
+          const firstLink = sidebar.querySelector('.mobile-sidebar__nav a');
+          if (firstLink) firstLink.focus();
+        }, 100);
+      });
+
+      // Close sidebar
+      function closeSidebar() {
+        sidebar.classList.remove('open');
+        sidebar.setAttribute('inert', '');
+        document.body.style.overflow = '';
+        // Move focus to hamburger button
+        openBtn.focus();
+      }
+      closeBtn.addEventListener('click', closeSidebar);
+
+      // Close on outside click
+      document.addEventListener('click', function(e) {
+        if (sidebar.classList.contains('open') && !sidebar.contains(e.target) && e.target !== openBtn) {
+          closeSidebar();
+        }
+      });
+
+      // Close on Esc
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+          closeSidebar();
+        }
+      });
+
+      // Theme toggle sync
+      themeBtn.addEventListener('click', function() {
+        document.getElementById('themeSwitcher').click();
+      });
     })();
 });

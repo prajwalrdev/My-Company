@@ -18,7 +18,7 @@
       "@type": "Organization",
       "name": "blockbTech.in",
       "url": "https://blockbtech.in/",
-      "logo": "https://blockbtech.in/packages/images/block4.png",
+      "logo": "https://blockbtech.in/packages/images/block4.webp",
       "sameAs": [
         "https://github.com/prajwaldevdaiga24",
         "https://www.linkedin.com/in/prajwal-r-020898257/",
@@ -65,13 +65,13 @@
 	<!-- Open Graph / Facebook -->
 	<meta property="og:title" content="Prajwal Dev | blockbTech.in - Tech Innovation & Web Development">
 	<meta property="og:description" content="Showcasing projects, sharing knowledge, and growing as a developer.">
-	<meta property="og:image" content="/packages/images/block4.png">
+	<meta property="og:image" content="/packages/images/block4.webp">
 	<meta property="og:type" content="website">
 	<!-- Twitter -->
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="Prajwal Dev | blockbTech.in - Tech Innovation & Web Development">
 	<meta name="twitter:description" content="Showcasing projects, sharing knowledge, and growing as a developer.">
-	<meta name="twitter:image" content="/packages/images/block4.png">
+	<meta name="twitter:image" content="/packages/images/block4.webp">
 	<!--- Bootstrap 5 CSS link --->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!--- Font Awesom CSS link --->
@@ -86,7 +86,7 @@
     <!--- style.css, where we will write our custom css--->
     <link rel="stylesheet" href="packages/css/common.css">
     <link rel="stylesheet" href="packages/css/praj.css">
-    <link rel="icon" href="packages/images/block4.png">
+    <link rel="icon" href="packages/images/block4.webp">
     <meta name="google-site-verification" content="REPLACE_WITH_YOUR_VERIFICATION_CODE" />
 </head>
 <body>
@@ -100,7 +100,7 @@
    <nav class="navbar navbar-expand-lg fixed-top" id="navbar_top" role="navigation" aria-label="Primary navigation">
   <div class="container">
     <a class="navbar-brand" href="#home">
-      <img src="packages/images/block4.png" alt="blockbtech logo" height="40" class="d-inline-block me-2">
+      <img src="packages/images/block4.webp" alt="blockbtech logo" height="40" class="d-inline-block me-2">
       block<span class="span-col">btech</span>
     </a>
     <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse-toggle" 
@@ -160,7 +160,7 @@
             </div>
             <div class="col-md-6 col-12">
               <div class="banner-top">
-                <img class="banner-scratch-bg" src="packages/images/black-circle-png-images-hd-1714.png" alt="Abstract black circle background for BlockBTech banner" loading="lazy">
+                <img class="banner-scratch-bg" src="packages/images/black-circle-png-images-hd-1714.webp" alt="Abstract black circle background for BlockBTech banner" loading="lazy">
                 <div class="banner-img">
                   <img class="main-icon" src="packages/images/block2.jpeg" alt="BlockBTech logo icon" loading="lazy"> 
                 </div>

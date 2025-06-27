@@ -1,29 +1,25 @@
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-  authDomain: "your-project.firebaseapp.com",
-  projectId: "your-project-id",
-  storageBucket: "your-project.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "1:123456789:web:abcdef123456"
+  apiKey: "AIzaSyDyheZqbypWAemo-YCW7MOxQSWd29UDzWk",
+  authDomain: "blockbtech.in",
+  projectId: "my-company-28578",
+  storageBucket: "blockbtech.in",
+  messagingSenderId: "194081304674",
+  appId: "1:194081304674:web:3881d772370f787ae4e13b"
 };
 
-// Initialize Firebase
 let app, db;
 
 function initializeFirebase() {
   try {
-    // Check if Firebase is already initialized
     if (typeof firebase !== 'undefined' && firebase.apps.length > 0) {
       app = firebase.app();
       db = firebase.firestore();
-    } else {
-      // Initialize Firebase
+    } else if (typeof firebase !== 'undefined') {
       firebase.initializeApp(firebaseConfig);
       app = firebase.app();
       db = firebase.firestore();
     }
-    
     console.log('Firebase initialized successfully');
     return { app, db };
   } catch (error) {
@@ -32,10 +28,30 @@ function initializeFirebase() {
   }
 }
 
+function getDB() {
+  if (!db && typeof firebase !== 'undefined') {
+    initializeFirebase();
+  }
+  return db;
+}
+
+// Recommended Firestore security rules for visitor analytics:
+//
+// service cloud.firestore {
+//   match /databases/{database}/documents {
+//     match /analytics/website_visits {
+//       allow read: if true;
+//       allow write: if request.auth != null; // or restrict as needed
+//     }
+//   }
+// }
+//
+
 // Visit Counter Class
 class VisitCounter {
   constructor() {
-    this.db = db;
+    this.db = getDB();
+    if (!this.db) throw new Error('Firestore DB is not initialized');
     this.counterRef = this.db.collection('analytics').doc('website_visits');
     this.isUpdating = false;
   }
@@ -125,6 +141,11 @@ function getFirebaseDoc(collection, docId) {
 function getFirebaseDocData(docRef) {
   return docRef.get();
 }
+
+// Export for other scripts
+window.initializeFirebase = initializeFirebase;
+window.getDB = getDB;
+window.VisitCounter = VisitCounter;
 
 // Initialize Firebase when script loads
 if (typeof firebase !== 'undefined') {
