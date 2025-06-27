@@ -2,25 +2,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var mainContent = document.getElementById('main-content');
     if (mainContent) mainContent.style.display = 'block';
 
-    // Theme Switcher
-    const themeSwitcher = document.getElementById('themeSwitcher');
-    const body = document.body;
-
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-        body.classList.add(savedTheme);
-    }
-
-    themeSwitcher.addEventListener('click', () => {
-        if (body.classList.contains('dark-mode')) {
-            body.classList.remove('dark-mode');
-            localStorage.setItem('theme', 'light-mode');
-        } else {
-            body.classList.add('dark-mode');
-            localStorage.setItem('theme', 'dark-mode');
-        }
-    });
-
     // Visit Counter (Background - No Display)
     async function trackVisit() {
         try {
