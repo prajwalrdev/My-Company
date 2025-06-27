@@ -74,30 +74,27 @@
 	<meta name="twitter:image" content="https://blockbtech.in/packages/images/block4.webp">
     <meta name="robots" content="index, follow">
 	<!--- Bootstrap 5 CSS link --->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!--- Font Awesom CSS link --->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
- 	<!--- Live Jquery URL--->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js" defer></script>
-    <!--- Owl Carousel Js And CSS For Testimonial Slider--->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" defer></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css">
-    <!--- Firebase SDK --->
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js" defer></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js" defer></script>
-    <!--- style.css, where we will write our custom css--->
+    <link rel="preload" as="image" href="packages/images/block4.webp">
     <link rel="stylesheet" href="packages/css/common.css">
     <link rel="stylesheet" href="packages/css/praj.css">
     <link rel="icon" href="packages/images/block4.webp">
-    <meta name="google-site-verification" content="REPLACE_WITH_YOUR_VERIFICATION_CODE" />
-    <!-- Defer non-critical JS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"></noscript>
+    <!--- Live Jquery URL--->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" defer></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js" defer></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js" defer></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css"></noscript>
+    <!--- style.css, where we will write our custom css--->
+    <link rel="preload" as="image" href="packages/images/black-circle-png-images-hd-1714.webp">
+    <link rel="preload" as="image" href="packages/images/block2.webp">
+    <meta name="google-site-verification" content="REPLACE_WITH_YOUR_VERIFICATION_CODE" />
     <!-- SEO, accessibility, and PWA optimizations applied. See manifest.json and service worker registration in the head. -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -107,7 +104,7 @@
    <nav class="navbar navbar-expand-lg fixed-top" id="navbar_top" role="navigation" aria-label="Primary navigation">
   <div class="container">
     <a class="navbar-brand" href="#home">
-      <img src="packages/images/block4.webp" alt="blockbtech logo" height="40" class="d-inline-block me-2">
+      <img src="packages/images/block4.webp" alt="blockbtech logo" width="40" height="40" class="d-inline-block me-2">
       block<span class="span-col">btech</span>
     </a>
     <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse-toggle" 
@@ -172,9 +169,9 @@
             <div class="col-md-6 col-12">
               <div class="banner-top">
                 <div style="position:relative; display:flex; align-items:center; justify-content:center; min-height:320px;">
-                <img class="banner-scratch-bg" src="packages/images/black-circle-png-images-hd-1714.webp" alt="Abstract black circle background for BlockBTech banner" loading="lazy">
+                <img class="banner-scratch-bg" src="packages/images/black-circle-png-images-hd-1714.webp" alt="Abstract black circle background for BlockBTech banner" width="400" height="400" loading="lazy">
                 <div class="banner-img">
-                    <img class="main-icon" src="packages/images/block2.webp" alt="BlockBTech logo icon" width="300" height="300" loading="lazy" style="aspect-ratio:1/1;">
+                    <img class="main-icon" src="packages/images/block2.webp" alt="BlockBTech logo icon" width="300" height="300" style="aspect-ratio:1/1;">
                   </div>
                 </div>
               </div>
@@ -756,6 +753,28 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
   </div>
   <!-- End Terms and Conditions Modal -->
+  <!-- Move Google Analytics/Tag Manager to end of body for non-blocking load -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G3DD9D07RW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-G3DD9D07RW');
+  </script>
+  <!-- Remove jQuery, OwlCarousel, and FontAwesome includes if not used -->
+  <!-- Remove <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js" defer></script> -->
+  <!-- Remove <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" defer></script> -->
+  <!-- Remove <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" ... > if not used -->
+  <!-- (Optional) Lazy-load reCAPTCHA: -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var recaptchaScript = document.createElement('script');
+      recaptchaScript.src = 'https://www.google.com/recaptcha/api.js';
+      recaptchaScript.async = true;
+      recaptchaScript.defer = true;
+      document.body.appendChild(recaptchaScript);
+    });
+  </script>
 </body>
 </html>
 
