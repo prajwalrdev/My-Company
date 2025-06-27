@@ -1779,3 +1779,23 @@ body.dark-mode .visitor-modal__dialog {
     display: flex !important;
   }
 }
+
+h3.typing {
+  display: inline-block;
+  min-width: 200px; /* Reserve space for typing text */
+  min-height: 1.5em; /* Reserve space for the line */
+  overflow: hidden;
+  white-space: nowrap;
+}
+h3.typing::after {
+  content: '|';
+  display: inline-block;
+  width: 1ch;
+  height: 1.2em;
+  vertical-align: middle;
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
