@@ -74,7 +74,6 @@
 	<meta name="twitter:image" content="https://blockbtech.in/packages/images/block4.webp">
     <meta name="robots" content="index, follow">
 	<!--- Bootstrap 5 CSS link --->
-    <link rel="preload" as="image" href="packages/images/block4.webp">
     <link rel="stylesheet" href="packages/css/common.css">
     <link rel="stylesheet" href="packages/css/praj.css">
     <link rel="icon" href="packages/images/block4.webp">
@@ -90,17 +89,62 @@
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js" defer></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js" defer></script>
     <!--- style.css, where we will write our custom css--->
-    <link rel="preload" as="image" href="packages/images/black-circle-png-images-hd-1714.webp">
-    <link rel="preload" as="image" href="packages/images/block2.webp">
     <meta name="google-site-verification" content="REPLACE_WITH_YOUR_VERIFICATION_CODE" />
     <!-- SEO, accessibility, and PWA optimizations applied. See manifest.json and service worker registration in the head. -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Google AdSense Ad (Above Footer) -->
+    <div class="container-fluid d-flex justify-content-center my-4">
+      <ins class="adsbygoogle"
+           style="display:block;min-width:320px;min-height:100px;width:100%;max-width:728px;height:auto"
+           data-ad-client="ca-pub-XXXXXXXXXXXXXXX"
+           data-ad-slot="YYYYYYYYYYYY"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
 </head>
 <body>
-
-<!-- Preloader removed -->
-<div id="main-content" role="main">
-  <!-- ...existing code... -->	  
+<!-- Mobile Sidebar Hamburger (visible only on mobile) -->
+<button id="sidebarOpenBtn" class="mobile-sidebar__hamburger" aria-label="Open menu" style="display: none;">
+  <span></span><span></span><span></span>
+</button>
+<!-- Sidebar Overlay -->
+<div id="sidebarOverlay" class="sidebar-overlay"></div>
+<!-- Mobile Sidebar Menu -->
+<aside id="mobileSidebar" class="mobile-sidebar" aria-label="Mobile navigation" inert>
+  <div class="mobile-sidebar__header">
+    <a class="mobile-sidebar__brand" href="#home">
+      <img src="packages/images/block4.webp" alt="blockbtech logo" width="36" height="36">
+      block<span class="span-col">btech</span>
+    </a>
+    <button id="sidebarCloseBtn" class="mobile-sidebar__close" aria-label="Close menu">&times;</button>
+  </div>
+  <nav class="mobile-sidebar__nav">
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#work">Experience</a></li>
+      <li><a href="#port">Portfolio</a></li>
+      <li><a href="#contactus">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="mobile-sidebar__contact">
+    <div><strong>Email:</strong> blockbtech01@gmail.com</div>
+    <div><strong>Location:</strong> Kundapura, Karnataka, India</div>
+    <div><strong>Phone:</strong> +91 7353607477</div>
+  </div>
+  <div class="mobile-sidebar__socials">
+    <a href="https://github.com/prajwaldevdaiga24" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+    <a href="https://www.linkedin.com/in/prajwal-r-020898257" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+    <a href="https://www.instagram.com/prajwal_dev_0424_" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="mailto:blockbtech01@gmail.com" target="_blank" aria-label="Email"><i class="fas fa-envelope"></i></a>
+  </div>
+</aside>
    <nav class="navbar navbar-expand-lg fixed-top" id="navbar_top" role="navigation" aria-label="Primary navigation">
   <div class="container">
     <a class="navbar-brand" href="#home">
@@ -111,7 +155,9 @@
             aria-controls="navbar-collapse-toggle" aria-expanded="false" aria-label="Toggle navigation">
       <span class="toggler-icon"></span>
     </button>
-
+    <button id="themeToggle" aria-label="Toggle dark mode" class="theme-toggle-btn ms-2" style="background: none; border: none; outline: none; display: flex; align-items: center; justify-content: center; z-index: 1051;">
+      <svg id="themeIcon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8f5fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/></svg>
+    </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbar-collapse-toggle">
       <ul class="navbar-nav">
         <li class="nav-item">
@@ -136,44 +182,63 @@
     </div>
   </div>
 </nav>
-
+<div id="main-content" role="main">
+  <!-- ...existing code... -->	  
     <section class="container-fluid main-section overflow-hidden" id="home">
         <div class="container">
-          <div class="row align-items-center">
-            <div class="col-md-6 col-12 d-flex flex-column justify-content-center hero-left-col">
+          <div class="row align-items-center justify-content-center" style="min-height: 80vh;">
+            <div class="col-md-6 col-12 d-flex flex-start justify-content-start hero-left-col">
               <div class="banner-left">
                 <h2>Hi There, <span class="span-col">I'm</span></h2>
+                <h3 class="typing">Web <span class="span-col">Developer</span></h3>
                 <h1>Prajwal Dev</h1>
                 <span class="head-bottom"></span>
-                <h3 class="typing">Web <span class="span-col">Developer</span></h3>
-                <div class="banner-section">
-                  <a href="https://www.linkedin.com/in/prajwal-r-020898257?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" aria-label="LinkedIn Profile">
-                    <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                <div class="banner-section social-icons">
+                  <a href="https://www.linkedin.com/in/prajwal-r-020898257?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" aria-label="LinkedIn Profile" role="img" class="lucide-social">
+                    <!-- Official LinkedIn SVG -->
+                    <svg width="28" height="28" viewBox="0 0 448 512" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M100.28 448H7.4V148.9h92.88zm-46.44-340.7C24.09 107.3 0 83.2 0 53.6A53.6 53.6 0 0 1 53.6 0a53.6 53.6 0 0 1 53.6 53.6c0 29.6-24.09 53.7-53.36 53.7zM447.8 448h-92.4V302.4c0-34.7-12.4-58.4-43.3-58.4-23.6 0-37.6 15.9-43.7 31.3-2.3 5.6-2.8 13.4-2.8 21.2V448h-92.4s1.2-242.1 0-267.1h92.4v37.9c12.3-19 34.3-46.1 83.5-46.1 60.9 0 106.7 39.8 106.7 125.4V448z"/></svg>
                   </a>
-                  <a href="https://youtube.com/@kundapuratrolling5583?feature=shared" aria-label="YouTube Channel">
-                    <i class="fab fa-youtube" aria-hidden="true"></i>
+                  <a href="https://youtube.com/@kundapuratrolling5583?feature=shared" aria-label="YouTube Channel" role="img" class="lucide-social">
+                    <!-- Official YouTube SVG -->
+                    <svg width="28" height="28" viewBox="0 0 576 512" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M549.655 124.083c-6.281-23.65-24.84-42.21-48.48-48.48C465.5 64 288 64 288 64s-177.5 0-213.175 11.603c-23.64 6.27-42.199 24.83-48.48 48.48C16 159.759 16 256 16 256s0 96.241 10.345 131.917c6.281 23.65 24.84 42.21 48.48 48.48C110.5 448 288 448 288 448s177.5 0 213.175-11.603c23.64-6.27 42.199-24.83 48.48-48.48C560 352.241 560 256 560 256s0-96.241-10.345-131.917zM232 336V176l142.857 80L232 336z"/></svg>
                   </a>
-                  <a href="https://www.instagram.com/prajwal_dev_0424_?igsh=OGQ5ZDc2ODk2ZA==" aria-label="Instagram Profile">
-                    <i class="fab fa-instagram" aria-hidden="true"></i>
+                  <a href="https://www.instagram.com/prajwal_dev_0424_?igsh=OGQ5ZDc2ODk2ZA==" aria-label="Instagram Profile" role="img" class="lucide-social">
+                    <!-- Instagram Glyph Only -->
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                      <line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/>
+                    </svg>
                   </a>
-                  <a href="https://github.com/prajwaldevdaiga24" aria-label="GitHub Profile">
-                    <i class="fab fa-github" aria-hidden="true"></i>
+                  <a href="https://github.com/prajwaldevdaiga24" aria-label="GitHub Profile" role="img" class="lucide-social">
+                    <!-- GitHub Mark Only -->
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.1-1.5-1.1-1.5-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05A9.38 9.38 0 0 1 12 6.84c.85.004 1.7.12 2.5.34 1.9-1.33 2.74-1.05 2.74-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.8 0 .26.18.57.69.48A10.01 10.01 0 0 0 22 12c0-5.52-4.48-10-10-10z"/></svg>
                   </a>
-              </div>
-            </div>
-            </div>
-            <div class="col-md-6 col-12">
-              <div class="banner-top">
-                <div style="position:relative; display:flex; align-items:center; justify-content:center; min-height:320px;">
-                <img class="banner-scratch-bg" src="packages/images/black-circle-png-images-hd-1714.webp" alt="Abstract black circle background for BlockBTech banner" width="400" height="400" loading="lazy">
-                <div class="banner-img">
-                    <img class="main-icon loaded" src="packages/images/block2.webp" alt="BlockBTech logo icon" width="300" height="300" style="aspect-ratio:1/1;">
-                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+            <div class="col-md-6 col-12 d-flex justify-content-center align-items-center">
+              <!-- <div class="banner-img" style="box-shadow: 0 10px 30px var(--shadow); background: var(--card-bg); border-radius: 20px; padding: 20px;">
+                <img class="main-icon loaded" src="packages/images/block2.webp" alt="BlockBTech logo icon" width="300" height="300" style="aspect-ratio:1/1; display: block; margin: 0 auto; border-radius: 20px;">
+            </div> -->
+             <!-- Modern Scroll Down Indicator -->
+            <div id="scrollDownIndicator" class="scroll-down-indicator">
+              <span class="mouse-icon">
+                <span class="mouse-wheel"></span>
+              </span>
+              <span class="scroll-down-text">Scroll Down</span>
+              <span class="arrow-bounce">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+              </span>
+              </div>
+                </div>
+              </div>
+            </div>
+       
+        <!-- Modern Scroll Up Button -->
+        <button id="scrollUpBtn" class="scroll-up-btn" aria-label="Scroll to top">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+        </button>
       </section>
       <section class="container-fluid bg-grey" id="about">
         <div class="container">
@@ -185,7 +250,7 @@
             <div class="col-lg-5 col-md-5 col-12 animated-item d-flex justify-content-center align-items-center">
               <div class="about-img">
                 <img src="packages/images/Prajwal.webp" alt="Prajwal Dev profile photo" width="400" height="400" loading="lazy" style="aspect-ratio:1/1;">
-              </div>
+            </div>
             </div>
             <div class="col-lg-7 col-md-7 col-12 animated-item d-flex align-items-center">
               <div class="about-info w-100">
@@ -231,33 +296,33 @@
           <div class="row">
             <div class="col-lg-4 col-md-6 col-12 animated-item">
               <div  class="service">
-                <div class="service-hex"><i class="fas fa-database"></i></div>
+                <div class="service-hex"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 0 20"/><path d="M12 2a15.3 15.3 0 0 0 0 20"/></svg></div>
                 <div class="service-inner">
                   <h3>BlockBtech World</h3>
                   <p>I created this website to share my knowledge and experience with the world. There is no single way to be creative.</p>
-		    <a href="../protfolio/index1.html" class="button button--flex button--small portfolio__button">
+		    <a href="../protfolio/index.html" class="button button--flex button--small portfolio__button">
                         More Info
-                        <i class="uil uil-arrow-right button__icon"></i>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 15.5v-7l6 3.5-6 3.5z"/></svg>
                     </a>
                 </div>
               </div>
             </div>
 		  <div class="col-lg-4 col-md-6 col-12 animated-item">
               <div  class="service">
-                <div class="service-hex"><i class="fas fa-database"></i></div>
+                <div class="service-hex"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
                 <div class="service-inner">
                   <h3>Image Compressor</h3>
                   <p>Compress JPG images online with this fast, free, and high-quality tool.</p>
 		    <a href="../jpgcompressor/index.html" class="button button--flex button--small portfolio__button">
                         More Info
-                        <i class="uil uil-arrow-right button__icon"></i>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.48 2.87 8.28 6.84 9.63.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.1-1.5-1.1-1.5-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05A9.38 9.38 0 0 1 12 6.84c.85.004 1.7.12 2.5.34 1.9-1.33 2.74-1.05 2.74-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.8 0 .26.18.57.69.48A10.01 10.01 0 0 0 22 12.26C22 6.58 17.52 2 12 2z" fill="#fff"/></svg>
                     </a>
                 </div>
               </div>
             </div>
             <div class="col-lg-4 col-md-6 col-12 animated-item">
               <div  class="service">
-                <div class="service-hex"><i class="fas fa-bug"></i></div>
+                <div class="service-hex"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/><line x1="9" y1="15" x2="9.01" y2="15"/><line x1="15" y1="15" x2="15.01" y2="15"/></svg></div>
                 <div class="service-inner">
 <!-- 		<div class="viewer-container">
                   <h3>AWT LAB</h3>
@@ -270,20 +335,20 @@
             </div>
 	    <div class="col-lg-4 col-md-6 col-12 animated-item">
               <div  class="service">
-                <div class="service-hex"><i class="fas fa-cube"></i></div>
+                <div class="service-hex"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M2 12a10 10 0 1 1 20 0c0 4.418-3.582 8-8 8s-8-3.582-8-8z"/><path d="M12 2v2"/></svg></div>
                 <div class="service-inner">
 		<h3>Calculator</h3>
                   <p>A simple calculator built with HTML, CSS, and JavaScript that performs all standard arithmetic operations.</p>
 		    <a href="./cal.html" class="button button--flex button--small portfolio__button">
                         More Info
-                        <i class="uil uil-arrow-right button__icon"></i>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.48 2.87 8.28 6.84 9.63.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.1-1.5-1.1-1.5-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05A9.38 9.38 0 0 1 12 6.84c.85.004 1.7.12 2.5.34 1.9-1.33 2.74-1.05 2.74-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.8 0 .26.18.57.69.48A10.01 10.01 0 0 0 22 12.26C22 6.58 17.52 2 12 2z" fill="#fff"/></svg>
                     </a>
                 </div>
               </div>
             </div>
             <div class="col-lg-4 col-md-6 col-12 animated-item">
               <div  class="service">
-                <div class="service-hex"><i class="fas fa-file-code"></i></div>
+                <div class="service-hex"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M2 12a10 10 0 1 1 20 0c0 4.418-3.582 8-8 8s-8-3.582-8-8z"/><path d="M12 2v2"/></svg></div>
                 <div class="service-inner">
                   <h3>Make it Simple</h3>
                   <p>Simplifying complex technology with clear and concise information and regular updates.</p>
@@ -293,119 +358,237 @@
           </div>
       </div>
       </section>
+      <!-- Latest Articles Section (replaces Experience) -->
       <section class="container-fluid main-section bg-grey" id="work">
         <div class="container">
           <div class="heading animated-item">
-            <h5>EXPERIENCE</h5>
-            <h2><span class="heading-border"></span> MY EXPERIENCE<span class="heading-border"></span></h2>
+            <h5>LATEST ARTICLES</h5>
+            <h2><span class="heading-border"></span> LATEST ARTICLES <span class="heading-border"></span></h2>
           </div>
-          <div class="row">
-            <div class="col-lg-4 col-md-4 col-12 mb-4 animated-item">
-              <div class="experience-book">
-                <div class="experience-page">
-                  <div class="experience-front">
-                    <h5>Dec, 2023 – Present</h5>
-                    <h4>Calculator</h4>
-                    <p>Developed a functional calculator using HTML, CSS, and JavaScript, capable of handling all basic arithmetic operations.</p>
-                </div>
-                  <div class="experience-back">
-                     <i class="fas fa-book-open"></i>
-                  </div>
-                  </div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-12 mb-4 animated-item">
-              <div class="experience-book">
-                <div class="experience-page">
-                  <div class="experience-front">
-                    <h5>Dec, 2023 – Present</h5>
-                    <h4>Web Developer</h4>
-                    <p>As a professional web developer, I specialize in building and maintaining websites and web applications, focusing on both front-end and back-end development.</p>
-                  </div>
-                  <div class="experience-back">
-                    <i class="fas fa-book-open"></i>
-                </div>
+          <div class="row" id="articles-list">
+            <!-- 4 visible news/industry articles -->
+            <div class="col-md-6 mb-4 article-card" style="display:block;">
+              <div class="card h-100">
+                <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="AI Intelligencer">
+                <div class="card-body">
+                  <div class="mb-2"><span class="badge bg-primary">AI</span> <span class="badge bg-info">News</span></div>
+                  <h5 class="card-title">AI Intelligencer: What matters in AI this week</h5>
+                  <p class="card-text">Features OpenAI's new conversational browser and power infrastructure strain from AI growth.</p>
+                  <div class="small text-muted mb-2">Source: WordStream, Wikipedia, Reuters</div>
+                  <a href="https://wordstream.com/ai-intelligencer" target="_blank" class="btn btn-primary">Read More</a>
                 </div>
               </div>
             </div>
-            <div class="col-lg-4 col-md-4 col-12 mb-4 animated-item">
-              <div class="experience-book">
-                <div class="experience-page">
-                  <div class="experience-front">
-                    <h5>Dec, 2023 – Present</h5>
-                    <h4>Validation Form</h4>
-                    <p>Implemented robust form validation using client-side JavaScript and server-side checks to ensure data accuracy, completeness, and security.</p>
-                  </div>
-                  <div class="experience-back">
-                    <i class="fas fa-book-open"></i>
+            <div class="col-md-6 mb-4 article-card" style="display:block;">
+              <div class="card h-100">
+                <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Google Search Demise">
+                <div class="card-body">
+                  <div class="mb-2"><span class="badge bg-danger">Google</span> <span class="badge bg-warning text-dark">AI</span></div>
+                  <h5 class="card-title">The Companies Betting They Can Profit From Google Search's Demise</h5>
+                  <p class="card-text">Profiles startups optimizing content for AI-generated search results.</p>
+                  <div class="small text-muted mb-2">Source: The Wall Street Journal</div>
+                  <a href="https://wsj.com/google-search-demise" target="_blank" class="btn btn-primary">Read More</a>
                 </div>
+              </div>
+            </div>
+            <div class="col-md-6 mb-4 article-card" style="display:block;">
+              <div class="card h-100">
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="ChatGPT Ad Play">
+                <div class="card-body">
+                  <div class="mb-2"><span class="badge bg-primary">AI</span> <span class="badge bg-dark">ChatGPT</span></div>
+                  <h5 class="card-title">ChatGPT's Upcoming Ad Play: A Direct Threat to Google's Search Goldmine</h5>
+                  <p class="card-text">How ads in ChatGPT could disrupt Google's ad revenue.</p>
+                  <div class="small text-muted mb-2">Source: Investors.com, Local Dominator</div>
+                  <a href="https://investors.com/chatgpt-ad-play" target="_blank" class="btn btn-primary">Read More</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 mb-4 article-card" style="display:block;">
+              <div class="card h-100">
+                <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Google AI Mode India">
+                <div class="card-body">
+                  <div class="mb-2"><span class="badge bg-danger">Google</span> <span class="badge bg-info">AI Mode</span></div>
+                  <h5 class="card-title">Google's AI Mode launches in India</h5>
+                  <p class="card-text">Conversation-first search replaces blue links, while keeping safeguards in place.</p>
+                  <div class="small text-muted mb-2">Source: New York Post, AP News, The Times of India</div>
+                  <a href="https://nypost.com/google-ai-mode-india" target="_blank" class="btn btn-primary">Read More</a>
+                </div>
+              </div>
+            </div>
+            <!-- All other articles: style="display:none;" -->
+          </div>
+          <div class="text-center mt-3">
+            <button id="viewMoreArticles" class="btn btn-outline-primary">View More Articles</button>
+          </div>
+          <!-- Modal for more articles -->
+          <div class="modal fade" id="articlesModal" tabindex="-1" aria-labelledby="articlesModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="articlesModalLabel">All Articles</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <!-- All articles (including the first 6) -->
+                    <!-- Will be cloned from the main list by JS -->
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          <!-- Google AdSense Ad Block (replace with your ad client/slot) -->
+          <div class="my-4 text-center">
+            <ins class="adsbygoogle"
+                 style="display:block;min-width:320px;min-height:100px;width:100%;max-width:728px;height:auto"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXX"
+                 data-ad-slot="YYYYYYYYYYYY"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+              (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+      </div>
         </div>
       </section>
+      <script>
+      // Show modal with all articles on 'View More' click
+      const viewMoreBtn = document.getElementById('viewMoreArticles');
+      const articlesModal = document.getElementById('articlesModal');
+      if (viewMoreBtn && articlesModal) {
+        viewMoreBtn.addEventListener('click', function() {
+          // Clone all article cards
+          const allArticles = document.querySelectorAll('.article-card');
+          const modalBody = articlesModal.querySelector('.modal-body .row');
+          modalBody.innerHTML = '';
+          allArticles.forEach(card => {
+            const clone = card.cloneNode(true);
+            clone.style.display = 'block';
+            modalBody.appendChild(clone);
+          });
+          // Show modal (Bootstrap 5)
+          const modal = new bootstrap.Modal(articlesModal);
+          modal.show();
+        });
+      }
+      </script>
       <section class="container-fluid main-section" id="port">
         <div class="container">
           <div class="heading animated-item">
             <h5>PORTFOLIO</h5>
             <h2><span class="heading-border"></span> Blockbtech World<span class="heading-border"></span></h2>
           </div>
-          <div class="row mt-5">
-            <div class="col-lg-6 col-md-12 col-12 animated-item">
-              <div class="portfolio-section">
-                <div class="row">
-                  <div class="col-md-7 col-12">
-                    <img src="packages/images/cer.webp" alt="Certificate: Time management - Infosys Springboard" width="350" height="250" loading="lazy">
+          <div class="row mt-5" id="portfolioCards">
+            <div class="col-lg-4 col-md-6 col-12 mb-4 animated-item">
+              <div class="portfolio-section portfolio-card" data-title="Time management" data-img="packages/images/cer.webp" data-desc="I have completed this course." data-tags="#infosys #springboard">
+                <div class="portfolio-img-wrap" style="position: relative;">
+                  <img src="packages/images/cer.webp" alt="Certificate: Time management - Infosys Springboard" class="portfolio-img clickable-img" loading="lazy">
+                  <div class="portfolio-award-icon" style="position: absolute; left: 12px; bottom: 12px; z-index: 2;">
+                    <svg width="32" height="410" viewBox="0 0 24 24" fill="none" stroke="#8f5fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="8" r="7"/>
+                      <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+                    </svg>
                   </div>
-                  <div class="col-md-5 col-12">
+                  <span class="portfolio-tag">Workplace</span>
+                  </div>
                     <div class="portfolio-info">
                       <h3>Time management</h3>
                       <p>I have completed this course.</p>
-                      <span>#infosys</span> 
-                      <span>#springboard</span> 
-                     </div>
-                  </div>
+                  <span>#infosys</span> <span>#springboard</span>
                 </div>
               </div>
             </div>
-            <div class="col-lg-6 col-md-12 col-12 animated-item">
-              <div class="portfolio-section">
-                <div class="row">
-                  <div class="col-md-7 col-12">
-                    <img src="packages/images/cerl.webp" alt="Certificate: Negotiation skill - Infosys Springboard" width="350" height="250" loading="lazy">
+            <div class="col-lg-4 col-md-6 col-12 mb-4 animated-item">
+              <div class="portfolio-section portfolio-card" data-title="Negotiation skill" data-img="packages/images/cerl.webp" data-desc="I have completed this course." data-tags="#infosys #springboard">
+                <div class="portfolio-img-wrap" style="position: relative;">
+                  <img src="packages/images/cerl.webp" alt="Certificate: Negotiation skill - Infosys Springboard" class="portfolio-img clickable-img" loading="lazy">
+                  <div class="portfolio-award-icon" style="position: absolute; left: 12px; bottom: 12px; z-index: 2;">
+                    <svg width="32" height="410" viewBox="0 0 24 24" fill="none" stroke="#8f5fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="8" r="7"/>
+                      <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+                    </svg>
                   </div>
-                  <div class="col-md-5 col-12">
+                  <span class="portfolio-tag">Coding</span>
+                  </div>
                     <div class="portfolio-info">
                       <h3>Negotiation skill</h3>
                       <p>I have completed this course.</p>
-                      <span>#infosys</span> 
-                      <span>#springboard</span> 
-                     </div>
-                  </div>
+                  <span>#infosys</span> <span>#springboard</span>
                 </div>
               </div>
             </div>
-            <div class="col-lg-6 col-md-12 col-12 mt-4 animated-item">
-              <div class="portfolio-section">
-                <div class="row">
-                  <div class="col-md-7 col-12">
-                    <img src="packages/images/cerll.webp" alt="Certificate: Python Programming" width="350" height="250" loading="lazy">
+            <div class="col-lg-4 col-md-6 col-12 mb-4 animated-item">
+              <div class="portfolio-section portfolio-card" data-title="Python Programming" data-img="packages/images/cerll.webp" data-desc="I have completed this course." data-tags="#python #programming">
+                <div class="portfolio-img-wrap" style="position: relative;">
+                  <img src="packages/images/cerll.webp" alt="Certificate: Python Programming" class="portfolio-img clickable-img" loading="lazy">
+                  <div class="portfolio-award-icon" style="position: absolute; left: 12px; bottom: 12px; z-index: 2;">
+                    <svg width="32" height="450" viewBox="0 0 24 24" fill="none" stroke="#8f5fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="8" r="7"/>
+                      <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+                    </svg>
                   </div>
-                  <div class="col-md-5 col-12">
+                  <span class="portfolio-tag">Technology</span>
+                  </div>
                     <div class="portfolio-info">
                       <h3>Python Programming</h3>
                       <p>I have completed this course.</p>
-                      <span>#python</span> 
-                      <span>#programming</span> 
-                     </div>
-                  </div>
+                  <span>#python</span> <span>#programming</span>
                 </div>
               </div>
             </div>
           </div>
+          <!-- Portfolio Popup Modal -->
+          <div id="portfolioModal" class="portfolio-modal" style="display:none;">
+            <div class="portfolio-modal-content">
+              <span class="portfolio-modal-close" id="portfolioModalClose">&times;</span>
+              <img id="portfolioModalImg" src="" alt="Portfolio Image">
+              <h3 id="portfolioModalTitle"></h3>
+              <p id="portfolioModalDesc"></p>
+              <div id="portfolioModalTags"></div>
+            </div>
+          </div>
         </div>
       </section>
+      <script>
+      // Portfolio Modal Logic
+      document.addEventListener('DOMContentLoaded', function() {
+        const cards = document.querySelectorAll('.portfolio-card .clickable-img');
+        const modal = document.getElementById('portfolioModal');
+        const modalImg = document.getElementById('portfolioModalImg');
+        const modalTitle = document.getElementById('portfolioModalTitle');
+        const modalDesc = document.getElementById('portfolioModalDesc');
+        const modalTags = document.getElementById('portfolioModalTags');
+        const modalClose = document.getElementById('portfolioModalClose');
+        cards.forEach(img => {
+          img.addEventListener('click', function() {
+            const card = img.closest('.portfolio-card');
+            modalImg.src = card.getAttribute('data-img');
+            modalTitle.textContent = card.getAttribute('data-title');
+            modalDesc.textContent = card.getAttribute('data-desc');
+            const tags = card.getAttribute('data-tags').split(' ');
+            modalTags.innerHTML = tags.map(tag => `<span class='portfolio-tag'>${tag}</span>`).join(' ');
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+          });
+        });
+        modalClose.addEventListener('click', function() {
+          modal.style.display = 'none';
+          document.body.style.overflow = '';
+        });
+        modal.addEventListener('click', function(e) {
+          if (e.target === modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+          }
+        });
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape' && modal.style.display === 'flex') {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+          }
+        });
+      });
+      </script>
       <section class="container-fluid main-section" id="contactus">
         <div class="container">
           <div class="heading animated-item">
@@ -429,21 +612,36 @@
                   <h3>Phone</h3>
                   <p>+91 7353607477</p>
                 </div>
-                <ul>
-                  <li><a href="https://www.instagram.com/prajwal_dev_0424_?igsh=OGQ5ZDc2ODk2ZA==" target="_blank" aria-label="Instagram" title="Instagram"><i class="fab fa-instagram"></i></a></li>
-                  <li><a href="https://youtube.com/@kundapuratrolling5583?feature=shared" target="_blank" aria-label="YouTube" title="YouTube"><i class="fab fa-youtube-square"></i></a></li>
-                  <li><a href="https://github.com/prajwaldevdaiga24" target="_blank" aria-label="GitHub" title="GitHub"><i class="fab fa-github"></i></a></li>
-                  <li><a href="https://www.linkedin.com/in/prajwal-r-020898257?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" aria-label="LinkedIn" title="LinkedIn"><i class="fab fa-linkedin-square"></i></a></li>
-                  
+                <ul class="contact-socials">
+                  <li>
+                    <a href="https://www.instagram.com/prajwal_dev_0424_?igsh=OGQ5ZDc2ODk2ZA==" target="_blank" aria-label="Instagram" title="Instagram" class="glass-social">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="7" fill="none"/><g><radialGradient id="insta-bg" cx="0.5" cy="0.5" r="0.8"><stop stop-color="#f9ce34"/><stop offset="0.45" stop-color="#ee2a7b"/><stop offset="1" stop-color="#6228d7"/></radialGradient><circle cx="12" cy="12" r="10" fill="url(#insta-bg)"/></g><g><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm0 5.7a2.2 2.2 0 1 1 0-4.4 2.2 2.2 0 0 1 0 4.4zm4.1-6.1a1.05 1.05 0 1 1-2.1 0 1.05 1.05 0 0 1 2.1 0z" fill="#fff"/><path d="M12 6.2c1.7 0 1.9 0 2.6.04.7.03 1.1.15 1.4.25.3.12.5.26.7.44.18.18.32.4.44.7.1.3.22.7.25 1.4.04.7.04.9.04 2.6s0 1.9-.04 2.6c-.03.7-.15 1.1-.25 1.4-.12.3-.26.5-.44.7-.18.18-.4.32-.7.44-.3.1-.7.22-1.4.25-.7.04-.9.04-2.6.04s-1.9 0-2.6-.04c-.7-.03-1.1-.15-1.4-.25-.3-.12-.5-.26-.7-.44-.18-.18-.32-.4-.44-.7-.1-.3-.22-.7-.25-1.4C6.2 13.9 6.2 13.7 6.2 12s0-1.9.04-2.6c.03-.7.15-1.1.25-1.4.12-.3.26-.5.44-.7.18-.18.4-.32.7-.44.3-.1.7-.22 1.4-.25C10.1 6.2 10.3 6.2 12 6.2zm0-1.2c-1.7 0-1.9 0-2.6.04-.8.04-1.4.17-1.9.36-.5.2-.9.44-1.3.88-.44.44-.68.8-.88 1.3-.19.5-.32 1.1-.36 1.9C6.2 10.1 6.2 10.3 6.2 12s0 1.9.04 2.6c.04.8.17 1.4.36 1.9.2.5.44.9.88 1.3.44.44.8.68 1.3.88.5.19 1.1.32 1.9.36.7.04.9.04 2.6.04s1.9 0 2.6-.04c.8-.04 1.4-.17 1.9-.36.5-.2.9-.44 1.3-.88.44-.44.68-.8.88-1.3.19-.5.32-1.1.36-1.9.04-.7.04-.9.04-2.6s0-1.9-.04-2.6c-.04-.8-.17-1.4-.36-1.9-.2-.5-.44-.9-.88-1.3-.44-.44-.8-.68-1.3-.88-.5-.19-1.1-.32-1.9-.36C13.9 5 13.7 5 12 5z" fill="#fff"/></g></svg>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://youtube.com/@kundapuratrolling5583?feature=shared" target="_blank" aria-label="YouTube" title="YouTube" class="glass-social">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#FF0000"/><path d="M10 15.5v-7l6 3.5-6 3.5z" fill="#fff"/></svg>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/prajwaldevdaiga24" target="_blank" aria-label="GitHub" title="GitHub" class="glass-social">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#181717"/><path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.48 2.87 8.28 6.84 9.63.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.1-1.5-1.1-1.5-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05A9.38 9.38 0 0 1 12 6.84c.85.004 1.7.12 2.5.34 1.9-1.33 2.74-1.05 2.74-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.8 0 .26.18.57.69.48A10.01 10.01 0 0 0 22 12.26C22 6.58 17.52 2 12 2z" fill="#fff"/></svg>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://www.linkedin.com/in/prajwal-r-020898257?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" aria-label="LinkedIn" title="LinkedIn" class="glass-social">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#0077B5"/><path d="M17 17h-2.5v-3.5c0-.8-.3-1.3-1-1.3-.6 0-.9.4-1 1-.1.2-.1.5-.1.8V17H10V10h2.5v1c.3-.5 1-1.2 2.1-1.2 1.5 0 2.4 1 2.4 2.9V17zM7.5 8.5C7 8.5 6.5 8 6.5 7.5S7 6.5 7.5 6.5 8.5 7 8.5 7.5 8 8.5 7.5 8.5zM8.5 17h-2V10h2v7z" fill="#fff"/></svg>
+                    </a>
+                  </li>
                 </ul>
               </div>
             </div>
             <div class="col-md-8 res-mt animated-item">
               <div class="contact-form">
                 <h3>Get In Touch</h3>
-<!--                 <iframe width="640px" height="480px" src="https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAU7vQ29UNDE3RzFMRlpaWFdLNENUNDBITDNMSVpRVS4u&embed=true" frameborder="0" marginwidth="0" marginheight="0" style="border: none; max-width:100%; max-height:100vh" allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen> </iframe> -->
+<!--                 <iframe width="640px" height="480px" src="https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAU7vQ29UNDE3RzFMRlpaWFdLNENUNDBITDNMSVpRVS4u&embed=true" frameborder="0" marginwidth="0" marginheight="0" style="border: none; max-width:100%; max-height:100vh" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe> -->
 <!-- Form Start -->
-<form id="contactForm" enctype="multipart/form-data" novalidate>
+<form id="contactForm" class="needs-validation" novalidate>
   <div class="row mt-4">
     <div class="col-md-6 mt-4">
       <div class="form-group">
@@ -451,7 +649,7 @@
         <input type="text" name="name" id="name" placeholder="First Name *" class="form-control" required pattern="[A-Za-z\s]{2,}" minlength="2" autocomplete="given-name" />
         <div class="invalid-feedback">Please enter a valid first name (minimum 2 characters, letters only)</div>
       </div>
-        </div>
+    </div>
     <div class="col-md-6 mt-4">
       <div class="form-group">
         <label for="last_name" class="form-label">Last Name *</label>
@@ -464,7 +662,7 @@
         <label for="email" class="form-label">Email *</label>
         <input type="email" name="email" id="email" placeholder="Email *" class="form-control" required autocomplete="email" />
         <div class="invalid-feedback">Please enter a valid email address</div>
-      </div>
+        </div>
     </div>
     <div class="col-md-6 mt-4">
       <div class="form-group">
@@ -472,22 +670,22 @@
         <input type="tel" name="phone" id="phone" placeholder="Phone (optional)" class="form-control" pattern="[0-9\-\+\s]{7,}" autocomplete="tel" />
         <div class="invalid-feedback">Please enter a valid phone number</div>
       </div>
-        </div>
+    </div>
     <div class="col-md-12 mt-4">
       <div class="form-group">
         <label for="subject" class="form-label">Subject</label>
         <input type="text" name="subject" id="subject" placeholder="Subject (optional)" class="form-control" maxlength="100" />
+        </div>
       </div>
-    </div>
     <div class="col-md-12 mt-4">
       <div class="form-group">
         <label for="message" class="form-label">Your Message *</label>
         <textarea name="message" id="message" placeholder="Your Message *" class="form-control" required minlength="10" rows="4" autocomplete="on"></textarea>
         <div class="invalid-feedback">Please enter a message (minimum 10 characters)</div>
+        </div>
       </div>
-    </div>
     <!-- Honeypot field (hidden from users) -->
-    <input type="text" name="website" id="website" style="display:none" tabindex="-1" autocomplete="off">
+    <input type="text" name="website" id="website" style="display:none !important;" tabindex="-1" autocomplete="off">
     <div class="col-md-12 mt-4">
       <div class="form-group">
         <div class="form-check mb-3">
@@ -496,9 +694,9 @@
             I agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms and Conditions</a>
           </label>
           <div class="invalid-feedback">You must agree to the terms and conditions</div>
+          </div>
         </div>
       </div>
-    </div>
       <!-- Add reCAPTCHA to the contact form -->
   <div class="g-recaptcha" data-sitekey="6LclM28rAAAAAKFpFoWLHQOrQxAsX8oooPjzeDty"></div> <!-- TODO: Replace YOUR_SITE_KEY with your actual site key -->
     <div class="col-md-12 mt-4 d-flex gap-3">
@@ -568,14 +766,14 @@ document.addEventListener('DOMContentLoaded', function() {
   const preloader = document.querySelector('.preloader');
   if (preloader) {
     preloader.addEventListener('transitionend', function() {
-      document.querySelector('.footer').style.display = 'block';
+      document.querySelector('.glass-footer').style.display = 'block';
     });
     // Fallback: if preloader is removed instantly
     setTimeout(function() {
-      document.querySelector('.footer').style.display = 'block';
+      document.querySelector('.glass-footer').style.display = 'block';
     }, 1200);
   } else {
-    document.querySelector('.footer').style.display = 'block';
+    document.querySelector('.glass-footer').style.display = 'block';
   }
 });
 </script>
@@ -592,181 +790,213 @@ document.addEventListener('DOMContentLoaded', function() {
         <div id="filePreview" class="mt-2 text-info small"></div>
         <div class="invalid-feedback">
           Please select a valid file (PDF, DOC, DOCX, TXT, JPG, JPEG, PNG)
-        </div>
       </div>
-    </div> -->
+      </div> -->
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 
-              </div>
+      </div>
             </div>
           </div>
+          </div>
         </div>
-      </div>
-  
+
       <!-- rating JavaScript -->
       <script src="packages/js/script.js"></script>
-      <!-- Portfolio-style Footer Start -->
-      <footer class="footer">
-        <div class="footer__bg">
-          <div class="footer__container container grid">
-            <div>
-              <h1 class="footer__title">Prajwal</h1>
-              <span class="footer__subtitle">Software Engineer</span>
-            </div>
-            <ul class="footer__links">
-              <li><a href="#services" class="footer__link">Services</a></li>
-              <li><a href="#port" class="footer__link">Portfolio</a></li>
-              <li><a href="#contactus" class="footer__link">Contact</a></li>
-            </ul>
-            <div class="footer__socials">
-              <a href="https://github.com/prajwaldevdaiga24" class="footer__social" aria-label="GitHub" target="_blank"><i class="fab fa-github"></i></a>
-              <a href="https://www.instagram.com/prajwal_dev_0424_?igsh=OGQ5ZDc2ODk2ZA==" class="footer__social" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
-              <a href="https://twitter.com/" class="footer__social" aria-label="Twitter" target="_blank"><i class="fab fa-twitter"></i></a>
-              <a href="https://www.linkedin.com/in/prajwal-r-020898257/" class="footer__social" aria-label="LinkedIn" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <!-- Modern Glass Footer Start -->
+      <footer class="glass-footer">
+        <div class="glass-footer__container">
+          <div class="glass-footer__col about">
+            <h3 class="glass-footer__title"><span style="color:#8f5fff;">Portfolio</span></h3>
+            <p class="glass-footer__desc">A passionate Full Stack Developer creating innovative digital experiences with modern technologies and creative solutions.</p>
+            <div class="glass-footer__socials">
+              <a href="https://github.com/prajwaldevdaiga24" class="glass-footer__social" aria-label="GitHub" target="_blank"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#181717"/><path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.48 2.87 8.28 6.84 9.63.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.1-1.5-1.1-1.5-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05A9.38 9.38 0 0 1 12 6.84c.85.004 1.7.12 2.5.34 1.9-1.33 2.74-1.05 2.74-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.8 0 .26.18.57.69.48A10.01 10.01 0 0 0 22 12c0-5.52-4.48-10-10-10z" fill="#fff"/></svg></a>
+              <a href="https://www.linkedin.com/in/prajwal-r-020898257?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" class="glass-footer__social" aria-label="LinkedIn" target="_blank"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#0077B5"/><path d="M17 17h-2.5v-3.5c0-.8-.3-1.3-1-1.3-.6 0-.9.4-1 1-.1.2-.1.5-.1.8V17H10V10h2.5v1c.3-.5 1-1.2 2.1-1.2 1.5 0 2.4 1 2.4 2.9V17zM7.5 8.5C7 8.5 6.5 8 6.5 7.5S7 6.5 7.5 6.5 8.5 7 8.5 7.5 8 8.5 7.5 8.5zM8.5 17h-2V10h2v7z" fill="#fff"/></svg></a>
+              <a href="https://www.instagram.com/prajwal_dev_0424_?igsh=OGQ5ZDc2ODk2ZA==" class="glass-footer__social" aria-label="Instagram" target="_blank"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><radialGradient id="insta-bg-footer" cx="0.5" cy="0.5" r="0.8"><stop stop-color="#f9ce34"/><stop offset="0.45" stop-color="#ee2a7b"/><stop offset="1" stop-color="#6228d7"/></radialGradient><circle cx="12" cy="12" r="10" fill="url(#insta-bg-footer)"/><g><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm0 5.7a2.2 2.2 0 1 1 0-4.4 2.2 2.2 0 0 1 0 4.4zm4.1-6.1a1.05 1.05 0 1 1-2.1 0 1.05 1.05 0 0 1 2.1 0z" fill="#fff"/><path d="M12 6.2c1.7 0 1.9 0 2.6.04.7.03 1.1.15 1.4.25.3.12.5.26.7.44.18.18.32.4.44.7.1.3.22.7.25 1.4.04.7.04.9.04 2.6s0 1.9-.04 2.6c-.03.7-.15 1.1-.25 1.4-.12.3-.26.5-.44.7-.18.18-.4.32-.7.44-.3.1-.7.22-1.4.25-.7.04-.9.04-2.6.04s-1.9 0-2.6-.04c-.7-.03-1.1-.15-1.4-.25-.3-.12-.5-.26-.7-.44-.18-.18-.32-.4-.44-.7-.1-.3-.22-.7-.25-1.4C6.2 13.9 6.2 13.7 6.2 12s0-1.9.04-2.6c.03-.7.15-1.1.25-1.4.12-.3.26-.5.44-.7.18-.18.4-.32.7-.44.3-.1.7-.22 1.4-.25C10.1 6.2 10.3 6.2 12 6.2zm0-1.2c-1.7 0-1.9 0-2.6.04-.8.04-1.4.17-1.9.36-.5.2-.9.44-1.3.88-.44.44-.68.8-.88 1.3-.19.5-.32 1.1-.36 1.9C6.2 10.1 6.2 10.3 6.2 12s0 1.9.04 2.6c.04.8.17 1.4.36 1.9.2.5.44.9.88 1.3.44.44.8.68 1.3.88.5.19 1.1.32 1.9.36.7.04.9.04 2.6.04s1.9 0 2.6-.04c.8-.04 1.4-.17 1.9-.36.5-.2.9-.44 1.3-.88.44-.44.68-.8.88-1.3.19-.5.32-1.1.36-1.9.04-.7.04-.9.04-2.6s0-1.9-.04-2.6c-.04-.8-.17-1.4-.36-1.9-.2-.5-.44-.9-.88-1.3-.44-.44-.8-.68-1.3-.88-.5-.19-1.1-.32-1.9-.36C13.9 5 13.7 5 12 5z" fill="#fff"/></g></svg></a>
+              <a href="mailto:blockbtech01@gmail.com" class="glass-footer__social" aria-label="Email" target="_blank"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#8f5fff"/><path d="M6 9.5l6 4 6-4v5.5a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9.5zm12-1.5a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1v.2l6 4 6-4V8z" fill="#fff"/></svg></a>
             </div>
           </div>
-          <p class="footer__copy">© Prajwal | All rights reserved @2025.</p>
+          <div class="glass-footer__col links">
+            <h4 class="glass-footer__heading">Quick Links</h4>
+            <ul class="glass-footer__links">
+              <li><a href="#about">About</a></li>
+              <li><a href="#port">Projects</a></li>
+              <li><a href="#services">Technologies</a></li>
+              <li><a href="#contactus">Contact</a></li>
+            </ul>
+          </div>
+          <div class="glass-footer__col contact">
+            <h4 class="glass-footer__heading">Contact</h4>
+            <div class="glass-footer__contact-item"><span class="glass-footer__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#8f5fff"/><path d="M17 8.5v7a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1zm-5 2.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" fill="#fff"/></svg></span> <span>blockbtech01@gmail.com</span></div>
+            <div class="glass-footer__contact-item"><span class="glass-footer__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#4ec4dd"/><path d="M12 7c-2.76 0-5 2.24-5 5 0 2.76 2.24 5 5 5s5-2.24 5-5c0-2.76-2.24-5-5-5zm0 8.5c-1.93 0-3.5-1.57-3.5-3.5S10.07 8.5 12 8.5s3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z" fill="#fff"/></svg></span> <span>Kundapura, Karnataka, India</span></div>
+            <div class="glass-footer__contact-item"><span class="glass-footer__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#a800ff"/><path d="M16.5 14.5c-1.1 0-2.2-.2-3.2-.6-.3-.1-.7 0-.9.2l-1.4 1.4c-2.7-1.4-4.9-3.6-6.3-6.3l1.4-1.4c.2-.2.3-.6.2-.9-.4-1-.6-2.1-.6-3.2C5 5.1 5.1 5 5.3 5h2.2c.2 0 .4.1.5.3.2.5.5 1.1.8 1.6.1.2.1.4 0 .6l-.7 1.7c.7 1.3 1.7 2.3 3 3l1.7-.7c.2-.1.4-.1.6 0 .5.3 1.1.6 1.6.8.2.1.3.3.3.5v2.2c0 .2-.1.3-.3.3z" fill="#fff"/></svg></span> <span>+91 7353607477</span></div>
+          </div>
         </div>
+        <div class="glass-footer__bottom">
+          <div class="glass-footer__copyright">© 2025 blockbtech.in. All rights reserved.</div>
+          <div class="glass-footer__links-inline">
+            <a href="#" class="glass-footer__bottom-link">Privacy Policy</a>
+            <a href="#" class="glass-footer__bottom-link">Terms of Service</a>
+            <a href="#" class="glass-footer__bottom-link">Cookie Policy</a>
+          </div>
+        </div>
+        <button class="glass-footer__scrolltop" id="scrollTopBtn" aria-label="Scroll to top">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#23272f" opacity="0.7"/><polyline points="18 15 12 9 6 15" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        </button>
       </footer>
-      <!-- Portfolio-style Footer End -->
-    </div>
-    <!-- Preloader Script -->
-     <!-- <script type="module" src="packages/js/server.js"></script> -->
-  <script src="packages/js/firebase-config.js"></script>
-  <script src="packages/js/index.js" defer></script>
   <script>
-    // Conditionally load Owl Carousel
-    const testimonialSection = document.querySelector('#testimonial');
-    const loadOwlCarousel = (entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // Load JS
-                const owlScript = document.createElement('script');
-                owlScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js';
-                owlScript.defer = true;
-                document.body.appendChild(owlScript);
-
-                owlScript.onload = () => {
-                    // Initialize Carousel
-                    $('.testimonial-carousel').owlCarousel({
-                        loop: true,
-                        margin: 10,
-                        nav: false,
-                        dots: true,
-                        responsive:{
-                            0:{ items:1 },
-                            600:{ items:2 },
-                            1000:{ items:3 }
-                        }
-                    });
-                };
-                observer.unobserve(testimonialSection);
-            }
+      // Scroll to top button logic
+    document.addEventListener('DOMContentLoaded', function() {
+        const btn = document.getElementById('scrollTopBtn');
+        btn.addEventListener('click', function() {
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+        window.addEventListener('scroll', function() {
+          if(window.scrollY > 200) btn.style.opacity = 1;
+          else btn.style.opacity = 0;
         });
-    };
+        btn.style.opacity = 0;
+      });
+</script>
+      <!-- Modern Glass Footer End -->
 
-    const testimonialObserver = new IntersectionObserver(loadOwlCarousel);
-    if (testimonialSection) {
-        testimonialObserver.observe(testimonialSection);
+<script src="packages/js/index.js"></script>
+<!-- <script src="packages/js/frame-motion.js"></script> -->
+<!-- Dark/Light Mode Toggle -->
+<button id="themeToggle" aria-label="Toggle dark mode" style="position: fixed; top: 18px; right: 24px; z-index: 200; background: none; border: none;">
+  <svg id="themeIcon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8f5fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/></svg>
+</button>
+<!-- Custom Cursor -->
+<div id="custom-cursor"></div>
+<!-- Add .reveal to main sections -->
+<section class="container-fluid main-section reveal" id="home">
+<!-- Typing Text Animation in Hero -->
+<!-- <span id="typewriter" class="typing"></span> -->
+<!-- Animated Counter Example -->
+<!-- <span class="counter" data-target="1000">0</span> -->
+<!-- Parallax Background Example -->
+<!-- Lottie Background Example -->
+<!-- <div id="lottie"></div> -->
+<!-- <script src="https://unpkg.com/lottie-web/build/player/lottie.min.js"></script> -->
+<!-- <script>
+lottie.loadAnimation({
+  container: document.getElementById('lottie'),
+  renderer: 'svg',
+  loop: true,
+  autoplay: true,
+  path: 'animation.json'
+});
+</script> -->
+
+<!-- Cookie Consent Popup and Google Analytics (GDPR/CCPA compliant) -->
+<script>
+  // Helper: Set/Get cookie
+  function setCookie(name, value, days) {
+    var expires = '';
+    if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + (days*24*60*60*1000));
+      expires = '; expires=' + date.toUTCString();
     }
-  </script>
-  <!-- Visitor Entry Modal (blocks site until filled) -->
-  <div class="visitor-modal" id="visitorModal" tabindex="-1" aria-modal="true" role="dialog" style="display:none;">
-    <div class="visitor-modal__backdrop"></div>
-    <div class="visitor-modal__dialog">
-      <h2 class="visitor-modal__title">Welcome to blockbTech.in</h2>
-      <form id="visitorModalForm" autocomplete="on">
-        <div class="visitor-modal__form-group">
-          <label for="visitorName">Name</label>
-          <input type="text" id="visitorName" name="visitorName" required minlength="2" placeholder="Enter your name" autocomplete="given-name" />
-        </div>
-        <div class="visitor-modal__form-group">
-          <label for="visitorEmail">Email</label>
-          <input type="email" id="visitorEmail" name="visitorEmail" required placeholder="Enter your email" autocomplete="email" />
-        </div>
-        <button type="submit" class="visitor-modal__submit">Enter</button>
-      </form>
-    </div>
-  </div>
-  <!-- Modal CSS/JS in praj.css and index.js -->
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-  <!-- Modern Mobile Sidebar Navbar -->
-  <div id="mobileSidebar" class="mobile-sidebar" aria-hidden="true">
-    <div class="mobile-sidebar__header">
-      <a class="mobile-sidebar__brand" href="#home">
-        <img src="packages/images/block4.webp" alt="blockbtech logo" height="36">
-        <span>block<span class="span-col">btech</span></span>
-      </a>
-      <button class="mobile-sidebar__close" id="sidebarCloseBtn" aria-label="Close menu">&times;</button>
-    </div>
-    <ul class="mobile-sidebar__nav">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#work">Experience</a></li>
-      <li><a href="#port">Portfolio</a></li>
-      <li><a href="#contactus">Contact</a></li>
-    </ul>
-  </div>
-  <!-- Sidebar CSS/JS in praj.css and index.js -->
-  <!-- Add hamburger button for mobile -->
-  <button class="mobile-sidebar__hamburger" id="sidebarOpenBtn" aria-label="Open menu">
-    <span></span><span></span><span></span>
-  </button>
-  <!-- Terms and Conditions Modal -->
-  <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="termsModalLabel">Terms and Conditions</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body" style="max-height:60vh; overflow-y:auto;">
-          <h6>1. Acceptance of Terms</h6>
-          <p>By using this website, you agree to be bound by these Terms and Conditions and our Privacy Policy.</p>
-          <h6>2. Use of the Website</h6>
-          <p>You agree to use this website only for lawful purposes and in a way that does not infringe the rights of others.</p>
-          <h6>3. Intellectual Property</h6>
-          <p>All content on this site, including text, graphics, logos, and software, is the property of blockbTech.in or its content suppliers and is protected by copyright laws.</p>
-          <h6>4. Limitation of Liability</h6>
-          <p>We are not liable for any damages arising from the use or inability to use this website or any content provided on the site.</p>
-          <h6>5. Changes to Terms</h6>
-          <p>We reserve the right to update or change these Terms at any time. Continued use of the site after changes constitutes acceptance of those changes.</p>
-          <h6>6. Contact</h6>
-          <p>If you have any questions about these Terms, please contact us at blockbtech01@gmail.com.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- End Terms and Conditions Modal -->
-  <!-- Move Google Analytics/Tag Manager to end of body for non-blocking load -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G3DD9D07RW"></script>
-  <script>
+    document.cookie = name + '=' + (value || '')  + expires + '; path=/';
+  }
+  function getCookie(name) {
+    var nameEQ = name + '=';
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+      var c = ca[i];
+      while (c.charAt(0)==' ') c = c.substring(1,c.length);
+      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+  }
+
+  // Show consent popup if not already given
+  window.addEventListener('DOMContentLoaded', function() {
+    if (!getCookie('cookie_consent')) {
+      var consent = document.createElement('div');
+      consent.id = 'cookieConsent';
+      consent.style = 'position:fixed;bottom:0;left:0;width:100%;background:#fff;border-top:1px solid #eee;z-index:9999;padding:16px 8px;box-shadow:0 -2px 8px rgba(0,0,0,0.05);text-align:center;font-size:16px;';
+      consent.innerHTML = 'This site uses cookies for analytics. <button id="acceptCookies" style="margin-left:12px;padding:6px 18px;background:#8f5fff;color:#fff;border:none;border-radius:4px;cursor:pointer;">Accept</button>';
+      document.body.appendChild(consent);
+      document.getElementById('acceptCookies').onclick = function() {
+        setCookie('cookie_consent', 'yes', 365);
+        document.getElementById('cookieConsent').remove();
+        loadAnalytics();
+      };
+    } else {
+      loadAnalytics();
+    }
+  });
+
+  // Load Google Analytics only after consent
+  function loadAnalytics() {
+    if (window.GA_LOADED) return;
+    window.GA_LOADED = true;
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://www.googletagmanager.com/gtag/js?id=G-G3DD9D07RW'; // Replace with your GA4 ID
+    document.head.appendChild(script);
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+    window.gtag = gtag;
     gtag('js', new Date());
-    gtag('config', 'G-G3DD9D07RW');
-  </script>
-  <!-- Remove jQuery, OwlCarousel, and FontAwesome includes if not used -->
-  <!-- Remove <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js" defer></script> -->
-  <!-- Remove <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" defer></script> -->
-  <!-- Remove <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" ... > if not used -->
-  <!-- (Optional) Lazy-load reCAPTCHA: -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var recaptchaScript = document.createElement('script');
-      recaptchaScript.src = 'https://www.google.com/recaptcha/api.js';
-      recaptchaScript.async = true;
-      recaptchaScript.defer = true;
-      document.body.appendChild(recaptchaScript);
+    gtag('config', 'G-G3DD9D07RW'); // Replace with your GA4 ID
+  }
+</script>
+<!-- End Cookie Consent & Analytics -->
+
+<!-- Custom Event Tracking Example -->
+<script>
+// Track contact form submission
+function trackContactForm() {
+  if (window.gtag) {
+    gtag('event', 'contact_form_submit', {
+      'event_category': 'Contact',
+      'event_label': 'Contact Form',
+      'value': 1
     });
-  </script>
+  }
+}
+// Example: Add to your contact form's onsubmit handler
+// <form ... onsubmit="trackContactForm()">
+
+// Track button clicks (example for a button with id="ctaBtn")
+document.addEventListener('DOMContentLoaded', function() {
+  var cta = document.getElementById('ctaBtn');
+  if (cta) {
+    cta.addEventListener('click', function() {
+      if (window.gtag) {
+        gtag('event', 'cta_button_click', {
+          'event_category': 'CTA',
+          'event_label': 'Main CTA',
+          'value': 1
+        });
+      }
+    });
+  }
+});
+</script>
+<!-- End Custom Event Tracking -->
+
+<!--
+Instructions:
+1. Filtering out your own IP from GA4:
+   - Go to Google Analytics > Admin > Data Streams > [Your Web Stream] > Configure tag settings > Show all > Define internal traffic.
+   - Add a rule for your IP address (search "what is my IP" on Google).
+   - Save and publish.
+2. Using Google Tag Assistant & GA4 DebugView:
+   - Install the Google Tag Assistant browser extension.
+   - Open your site, enable Tag Assistant, and check for analytics hits.
+   - In GA4, go to Admin > DebugView to see real-time events.
+-->
+
+<!-- Remove the old GA4 script from here. -->
+
 </body>
 </html>
+
+
 

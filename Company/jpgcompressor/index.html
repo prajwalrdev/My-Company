@@ -13,11 +13,6 @@
       transition: background 0.3s, color 0.3s;
     }
 
-    body.dark-mode {
-      background: #121212;
-      color: #e0e0e0;
-    }
-
     .header {
       background: linear-gradient(to right, #e5c7e5, #e7cee7);
       color: white;
@@ -29,17 +24,6 @@
       position: relative;
     }
 
-    .header button {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: none;
-      color: white;
-      border: none;
-      font-size: 20px;
-      cursor: pointer;
-    }
-
     .container {
       background: white;
       padding: 20px;
@@ -48,11 +32,6 @@
       margin: auto;
       box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
       transition: background 0.3s;
-    }
-
-    body.dark-mode .container {
-      background-color: #1e1e1e;
-      box-shadow: 0px 0px 10px rgba(255,255,255,0.05);
     }
 
     .upload-box {
@@ -90,12 +69,6 @@
       width: 90%;
       border: 1px solid #ccc;
       border-radius: 5px;
-    }
-
-    body.dark-mode input, body.dark-mode select {
-      background: #333;
-      color: #fff;
-      border-color: #555;
     }
 
     .slider-container, .size-container, .resize-container {
@@ -168,7 +141,6 @@
 <body aria-label="JPEG Compressor Application">
   <div class="header">
     JPEG-Image Compressor
-    <button onclick="toggleDarkMode()">🌓</button>
   </div>
 
   <div class="container">
@@ -210,10 +182,6 @@
   </div>
 
   <script>
-    function toggleDarkMode() {
-      document.body.classList.toggle('dark-mode');
-    }
-
     function compressImage() {
       const fileInput = document.getElementById('upload');
       const sizeInput = document.getElementById('size');
